@@ -1,0 +1,176 @@
+"""Entry point for GRPO with fixed-coefficient OPD."""
+
+import math
+from copy import deepcopy
+
+import hydra
+import ray
+from omegaconf import OmegaConf, open_dict
+
+
+@hydra.main(config_path="config", config_name="ppo_trainer", version_base=None)
+def main(config):
+    run_grpo_opd_trainer(config)
+
+
+def configure_grpo_opd_trainer(config) -> dict:
+    """Configure standard GRPO plus a frozen-teacher OPD auxiliary loss."""
+
+    opd_cfg = config.algorithm.get("opd", {})
+    teacher_model_path = opd_cfg.get("teacher_model_path")
+    if not teacher_model_path:
+        raise ValueError("algorithm.opd.teacher_model_path is required")
+    opd_coef = float(opd_cfg.get("opd_coef", 0.01))
+    if not math.isfinite(opd_coef) or opd_coef < 0:
+        raise ValueError("algorithm.opd.opd_coef must be finite and nonnegative")
+
+    with open_dict(config):
+        config.algorithm.adv_estimator = "grpo"
+        config.algorithm.use_kl_in_reward = False
+
+        actor = config.actor_rollout_ref.actor
+        actor.use_dynamic_bsz = False
+        actor.use_sdl_loss = True
+        actor.sdl_loss_coef = opd_coef
+        actor.use_sdar_loss = False
+        actor.use_kl_loss = False
+
+        if "reward_model" in config:
+            config.reward_model.enable = False
+
+        config.opd_teacher = deepcopy(config.actor_rollout_ref)
+        config.opd_teacher.model.path = teacher_model_path
+        config.opd_teacher.ref.log_prob_micro_batch_size_per_gpu = opd_cfg.get(
+            "teacher_log_prob_micro_batch_size_per_gpu",
+            config.actor_rollout_ref.ref.log_prob_micro_batch_size_per_gpu,
+        )
+
+    return {"teacher_model_path": teacher_model_path, "opd_coef": opd_coef}
+
+
+def run_grpo_opd_trainer(config) -> None:
+    if not ray.is_initialized():
+        from verl.trainer.constants_ppo import get_ppo_ray_runtime_env
+
+        default_runtime_env = get_ppo_ray_runtime_env()
+        ray_init_kwargs = config.get("ray_init", {})
+        runtime_env = OmegaConf.merge(default_runtime_env, ray_init_kwargs.get("runtime_env", {}))
+        ray_init_kwargs = OmegaConf.create({**ray_init_kwargs, "runtime_env": runtime_env})
+        print(f"ray init kwargs: {ray_init_kwargs}")
+        ray.init(**OmegaConf.to_container(ray_init_kwargs))
+
+    runner = GRPOOPDTaskRunner.remote()
+    ray.get(runner.run.remote(config))
+
+
+@ray.remote(num_cpus=1)
+class GRPOOPDTaskRunner:
+    def run(self, config):
+        settings = configure_grpo_opd_trainer(config)
+        from verl.trainer.ppo.grpo_opd_trainer import GRPOOPDTrainer
+
+        run_configured_grpo_opd_task(config, GRPOOPDTrainer, settings, "GRPO+OPD")
+
+
+def run_configured_grpo_opd_task(config, trainer_cls, settings: dict, trainer_label: str) -> None:
+    """Build shared ALFWorld GRPO+OPD dependencies and run the selected trainer."""
+
+    from pprint import pprint
+
+    from verl.utils.fs import copy_to_local
+
+    pprint(OmegaConf.to_container(config, resolve=True))
+    OmegaConf.resolve(config)
+    opd_cfg = config.algorithm.opd
+
+    local_path = copy_to_local(
+        config.actor_rollout_ref.model.path,
+        use_shm=config.actor_rollout_ref.model.get("use_shm", False),
+    )
+
+    from agent_system.environments import make_envs
+
+    envs, val_envs = make_envs(config)
+
+    from verl.utils import hf_processor, hf_tokenizer
+
+    trust_remote_code = config.data.get("trust_remote_code", False)
+    tokenizer = hf_tokenizer(local_path, trust_remote_code=trust_remote_code)
+    processor = hf_processor(local_path, trust_remote_code=trust_remote_code, use_fast=True)
+
+    if config.actor_rollout_ref.actor.strategy not in ("fsdp", "fsdp2"):
+        raise NotImplementedError(f"{trainer_cls.__name__} currently supports FSDP/FSDP2 actors")
+    from verl.single_controller.ray import RayWorkerGroup
+    from verl.workers.fsdp_workers import ActorRolloutRefWorker, AsyncActorRolloutRefWorker
+
+    actor_rollout_cls = AsyncActorRolloutRefWorker if config.actor_rollout_ref.rollout.mode == "async" else ActorRolloutRefWorker
+
+    from verl.trainer.ppo.ray_trainer import ResourcePoolManager, Role
+
+    role_worker_mapping = {
+        Role.ActorRollout: ray.remote(actor_rollout_cls),
+        Role.TeacherPolicy: ray.remote(ActorRolloutRefWorker),
+    }
+    global_pool_id = "global_pool"
+    resource_pool_spec = {global_pool_id: [config.trainer.n_gpus_per_node] * config.trainer.nnodes}
+    mapping = {
+        Role.ActorRollout: global_pool_id,
+        Role.TeacherPolicy: global_pool_id,
+    }
+    resource_pool_manager = ResourcePoolManager(resource_pool_spec=resource_pool_spec, mapping=mapping)
+
+    reward_manager_name = config.reward_model.get("reward_manager", "episode")
+    if reward_manager_name != "episode":
+        raise NotImplementedError(f"Unsupported reward manager: {reward_manager_name}")
+    from agent_system.reward_manager import EpisodeRewardManager
+
+    reward_fn = EpisodeRewardManager(tokenizer=tokenizer, num_examine=0, normalize_by_length=False)
+    val_reward_fn = EpisodeRewardManager(tokenizer=tokenizer, num_examine=1, normalize_by_length=False)
+
+    assert config.actor_rollout_ref.rollout.n == 1, (
+        "actor_rollout_ref.rollout.n must stay 1; environment grouping uses env.rollout.n"
+    )
+
+    from agent_system.multi_turn_rollout import TrajectoryCollector
+    from verl.trainer.ppo.rlsd_utils import SkillProvider
+
+    skills_dir = opd_cfg.get("skills_dir", "skills/alfworld")
+    skill_provider = SkillProvider(skills_dir=skills_dir, skill_all=opd_cfg.get("skill_all", False))
+    traj_collector = TrajectoryCollector(config=config, tokenizer=tokenizer, processor=processor)
+
+    from verl.trainer.main_ppo import create_rl_dataset, create_rl_sampler
+    from verl.utils.dataset.rl_dataset import collate_fn
+
+    train_dataset = create_rl_dataset(config.data.train_files, config.data, tokenizer, processor)
+    val_dataset = create_rl_dataset(config.data.val_files, config.data, tokenizer, processor)
+    train_sampler = create_rl_sampler(config.data, train_dataset)
+
+    print(f"[{trainer_label}] teacher_model_path: {settings['teacher_model_path']}")
+    print(f"[{trainer_label}] opd_coef: {settings['opd_coef']}")
+    print(f"[{trainer_label}] skills_dir: {skills_dir}")
+
+    trainer = trainer_cls(
+        config=config,
+        tokenizer=tokenizer,
+        processor=processor,
+        role_worker_mapping=role_worker_mapping,
+        resource_pool_manager=resource_pool_manager,
+        ray_worker_group_cls=RayWorkerGroup,
+        reward_fn=reward_fn,
+        val_reward_fn=val_reward_fn,
+        train_dataset=train_dataset,
+        val_dataset=val_dataset,
+        collate_fn=collate_fn,
+        train_sampler=train_sampler,
+        device_name=config.trainer.device,
+        traj_collector=traj_collector,
+        envs=envs,
+        val_envs=val_envs,
+        skill_provider=skill_provider,
+    )
+    trainer.init_workers()
+    trainer.fit()
+
+
+if __name__ == "__main__":
+    main()

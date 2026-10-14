@@ -1,0 +1,811 @@
+
+(define (problem plan_trial_T20190906_180154_425245)
+(:domain alfred)
+(:objects
+agent1 - agent
+SaltShaker - object
+        HousePlant - object
+        Candle - object
+        SprayBottle - object
+        Bowl - object
+        Window - object
+        CD - object
+        Egg - object
+        Glassbottle - object
+        Sink - object
+        Pillow - object
+        Spoon - object
+        SoapBottle - object
+        TeddyBear - object
+        ButterKnife - object
+        Cup - object
+        Plate - object
+        RemoteControl - object
+        Tomato - object
+        Statue - object
+        HandTowel - object
+        Knife - object
+        StoveKnob - object
+        LightSwitch - object
+        Pen - object
+        Painting - object
+        DishSponge - object
+        Vase - object
+        Mug - object
+        ToiletPaper - object
+        Box - object
+        Mirror - object
+        Ladle - object
+        Fork - object
+        Blinds - object
+        Footstool - object
+        KeyChain - object
+        Cloth - object
+        Laptop - object
+        TissueBox - object
+        PepperShaker - object
+        FloorLamp - object
+        WateringCan - object
+        Apple - object
+        Pan - object
+        PaperTowel - object
+        PaperTowelRoll - object
+        Newspaper - object
+        Television - object
+        Chair - object
+        CellPhone - object
+        CreditCard - object
+        Lettuce - object
+        BasketBall - object
+        Potato - object
+        Curtains - object
+        Boots - object
+        Pencil - object
+        AlarmClock - object
+        ToiletPaperRoll - object
+        Spatula - object
+        Book - object
+        Bread - object
+        SoapBar - object
+        Watch - object
+        DeskLamp - object
+        Kettle - object
+        Pot - object
+        ScrubBrush - object
+        WineBottle - object
+        ShowerDoor - object
+        Bathtub - object
+        LaundryHamperLid - object
+        ShowerGlass - object
+        Poster - object
+        TennisRacket - object
+        BaseballBat - object
+        Towel - object
+        Plunger - object
+SaltShakerType - otype
+        HousePlantType - otype
+        CandleType - otype
+        SprayBottleType - otype
+        BowlType - otype
+        WindowType - otype
+        CDType - otype
+        EggType - otype
+        GlassbottleType - otype
+        SinkType - otype
+        PillowType - otype
+        SpoonType - otype
+        SoapBottleType - otype
+        TeddyBearType - otype
+        ButterKnifeType - otype
+        CupType - otype
+        PlateType - otype
+        RemoteControlType - otype
+        TomatoType - otype
+        StatueType - otype
+        HandTowelType - otype
+        KnifeType - otype
+        StoveKnobType - otype
+        LightSwitchType - otype
+        PenType - otype
+        PaintingType - otype
+        DishSpongeType - otype
+        VaseType - otype
+        MugType - otype
+        ToiletPaperType - otype
+        BoxType - otype
+        MirrorType - otype
+        LadleType - otype
+        ForkType - otype
+        BlindsType - otype
+        FootstoolType - otype
+        KeyChainType - otype
+        ClothType - otype
+        LaptopType - otype
+        TissueBoxType - otype
+        PepperShakerType - otype
+        FloorLampType - otype
+        WateringCanType - otype
+        AppleType - otype
+        PanType - otype
+        PaperTowelType - otype
+        PaperTowelRollType - otype
+        NewspaperType - otype
+        TelevisionType - otype
+        ChairType - otype
+        CellPhoneType - otype
+        CreditCardType - otype
+        LettuceType - otype
+        BasketBallType - otype
+        PotatoType - otype
+        CurtainsType - otype
+        BootsType - otype
+        PencilType - otype
+        AlarmClockType - otype
+        ToiletPaperRollType - otype
+        SpatulaType - otype
+        BookType - otype
+        BreadType - otype
+        SoapBarType - otype
+        WatchType - otype
+        DeskLampType - otype
+        KettleType - otype
+        PotType - otype
+        ScrubBrushType - otype
+        WineBottleType - otype
+        ShowerDoorType - otype
+        BathtubType - otype
+        LaundryHamperLidType - otype
+        ShowerGlassType - otype
+        PosterType - otype
+        TennisRacketType - otype
+        BaseballBatType - otype
+        TowelType - otype
+        PlungerType - otype
+SafeType - rtype
+        DrawerType - rtype
+        CoffeeMachineType - rtype
+        HandTowelHolderType - rtype
+        SinkBasinType - rtype
+        DresserType - rtype
+        LaundryHamperType - rtype
+        TVStandType - rtype
+        BathtubBasinType - rtype
+        CabinetType - rtype
+        FridgeType - rtype
+        DeskType - rtype
+        ToiletType - rtype
+        CartType - rtype
+        SideTableType - rtype
+        SofaType - rtype
+        CoffeeTableType - rtype
+        DiningTableType - rtype
+        CounterTopType - rtype
+        GarbageCanType - rtype
+        ArmChairType - rtype
+        ShelfType - rtype
+        MicrowaveType - rtype
+        ToasterType - rtype
+        BedType - rtype
+        PaintingHangerType - rtype
+        TowelHolderType - rtype
+        ToiletPaperHangerType - rtype
+        StoveBurnerType - rtype
+        OttomanType - rtype
+
+
+        AlarmClock_bar__plus_02_dot_22_bar__plus_00_dot_80_bar__minus_01_dot_28 - object
+        AlarmClock_bar__plus_02_dot_59_bar__plus_00_dot_80_bar__minus_01_dot_22 - object
+        BaseballBat_bar__plus_02_dot_85_bar__plus_00_dot_64_bar__plus_01_dot_84 - object
+        BasketBall_bar__plus_01_dot_02_bar__plus_00_dot_33_bar__minus_00_dot_98 - object
+        Blinds_bar__plus_00_dot_11_bar__plus_02_dot_34_bar__minus_01_dot_44 - object
+        Book_bar__minus_00_dot_90_bar__plus_00_dot_57_bar__plus_01_dot_18 - object
+        Boots_bar__minus_01_dot_28_bar__plus_00_dot_00_bar__minus_01_dot_34 - object
+        Bowl_bar__minus_01_dot_32_bar__plus_01_dot_23_bar__minus_00_dot_75 - object
+        Box_bar__plus_02_dot_73_bar__plus_00_dot_20_bar__plus_00_dot_89 - object
+        CD_bar__plus_02_dot_79_bar__plus_00_dot_12_bar__minus_01_dot_25 - object
+        CD_bar__plus_02_dot_84_bar__plus_00_dot_04_bar__plus_00_dot_18 - object
+        CD_bar__minus_01_dot_35_bar__plus_00_dot_11_bar__minus_00_dot_88 - object
+        CellPhone_bar__plus_01_dot_84_bar__plus_00_dot_80_bar__minus_01_dot_19 - object
+        CellPhone_bar__minus_01_dot_25_bar__plus_01_dot_24_bar__minus_00_dot_55 - object
+        Chair_bar__plus_02_dot_40_bar__plus_00_dot_00_bar__minus_01_dot_08 - object
+        CreditCard_bar__plus_01_dot_65_bar__plus_00_dot_79_bar__minus_01_dot_12 - object
+        CreditCard_bar__plus_02_dot_59_bar__plus_01_dot_04_bar__minus_01_dot_40 - object
+        CreditCard_bar__plus_02_dot_85_bar__plus_00_dot_57_bar__minus_01_dot_22 - object
+        DeskLamp_bar__minus_01_dot_31_bar__plus_01_dot_23_bar__minus_00_dot_99 - object
+        KeyChain_bar__minus_01_dot_35_bar__plus_01_dot_23_bar__minus_00_dot_55 - object
+        Laptop_bar__minus_00_dot_29_bar__plus_00_dot_56_bar__plus_00_dot_85 - object
+        LightSwitch_bar__plus_02_dot_66_bar__plus_01_dot_28_bar__plus_01_dot_90 - object
+        Mirror_bar__plus_01_dot_99_bar__plus_01_dot_38_bar__plus_01_dot_88 - object
+        Mug_bar__plus_02_dot_40_bar__plus_00_dot_79_bar__minus_01_dot_25 - object
+        Mug_bar__plus_02_dot_82_bar__plus_00_dot_79_bar__minus_01_dot_22 - object
+        Pencil_bar__plus_02_dot_59_bar__plus_00_dot_81_bar__minus_01_dot_38 - object
+        Pen_bar__plus_02_dot_22_bar__plus_00_dot_80_bar__minus_01_dot_12 - object
+        Pillow_bar__minus_00_dot_63_bar__plus_00_dot_63_bar__plus_01_dot_61 - object
+        Statue_bar__plus_01_dot_82_bar__plus_01_dot_04_bar__minus_01_dot_42 - object
+        TissueBox_bar__minus_01_dot_29_bar__plus_00_dot_38_bar__minus_00_dot_61 - object
+        TissueBox_bar__minus_01_dot_29_bar__plus_00_dot_68_bar__minus_00_dot_54 - object
+        Watch_bar__plus_01_dot_51_bar__plus_00_dot_80_bar__minus_01_dot_40 - object
+        Watch_bar__plus_01_dot_96_bar__plus_01_dot_05_bar__minus_01_dot_40 - object
+        Watch_bar__plus_02_dot_17_bar__plus_01_dot_04_bar__minus_01_dot_43 - object
+        Watch_bar__minus_01_dot_35_bar__plus_00_dot_11_bar__minus_00_dot_58 - object
+        Window_bar__plus_00_dot_12_bar__plus_01_dot_50_bar__minus_01_dot_59 - object
+        Bed_bar__minus_00_dot_64_bar__plus_00_dot_00_bar__plus_00_dot_87 - receptacle
+        Desk_bar__plus_02_dot_29_bar__plus_00_dot_01_bar__minus_01_dot_15 - receptacle
+        Drawer_bar__plus_01_dot_63_bar__plus_00_dot_18_bar__minus_01_dot_21 - receptacle
+        Drawer_bar__plus_01_dot_63_bar__plus_00_dot_40_bar__minus_01_dot_21 - receptacle
+        Drawer_bar__plus_01_dot_63_bar__plus_00_dot_62_bar__minus_01_dot_21 - receptacle
+        Drawer_bar__plus_01_dot_95_bar__plus_00_dot_18_bar__minus_01_dot_21 - receptacle
+        Drawer_bar__plus_01_dot_95_bar__plus_00_dot_40_bar__minus_01_dot_21 - receptacle
+        Drawer_bar__plus_01_dot_95_bar__plus_00_dot_62_bar__minus_01_dot_21 - receptacle
+        Drawer_bar__plus_02_dot_82_bar__plus_00_dot_17_bar__minus_01_dot_21 - receptacle
+        Drawer_bar__plus_02_dot_82_bar__plus_00_dot_40_bar__minus_01_dot_21 - receptacle
+        Drawer_bar__plus_02_dot_82_bar__plus_00_dot_62_bar__minus_01_dot_21 - receptacle
+        Drawer_bar__minus_01_dot_29_bar__plus_00_dot_17_bar__minus_00_dot_58 - receptacle
+        Drawer_bar__minus_01_dot_29_bar__plus_00_dot_17_bar__minus_00_dot_92 - receptacle
+        Drawer_bar__minus_01_dot_29_bar__plus_00_dot_44_bar__minus_00_dot_58 - receptacle
+        Drawer_bar__minus_01_dot_29_bar__plus_00_dot_44_bar__minus_00_dot_92 - receptacle
+        Drawer_bar__minus_01_dot_29_bar__plus_00_dot_74_bar__minus_00_dot_58 - receptacle
+        Drawer_bar__minus_01_dot_29_bar__plus_00_dot_74_bar__minus_00_dot_92 - receptacle
+        Drawer_bar__minus_01_dot_29_bar__plus_01_dot_02_bar__minus_00_dot_58 - receptacle
+        Drawer_bar__minus_01_dot_29_bar__plus_01_dot_02_bar__minus_00_dot_92 - receptacle
+        Dresser_bar__minus_01_dot_33_bar__plus_00_dot_00_bar__minus_00_dot_75 - receptacle
+        GarbageCan_bar__plus_02_dot_84_bar__plus_00_dot_00_bar__plus_00_dot_22 - receptacle
+        Shelf_bar__plus_01_dot_80_bar__plus_00_dot_80_bar__minus_01_dot_42 - receptacle
+        Shelf_bar__plus_01_dot_80_bar__plus_01_dot_04_bar__minus_01_dot_42 - receptacle
+        Shelf_bar__plus_02_dot_25_bar__plus_01_dot_27_bar__minus_01_dot_42 - receptacle
+        Shelf_bar__plus_02_dot_47_bar__plus_00_dot_80_bar__minus_01_dot_41 - receptacle
+        Shelf_bar__plus_02_dot_47_bar__plus_01_dot_04_bar__minus_01_dot_41 - receptacle
+        Shelf_bar__plus_02_dot_70_bar__plus_01_dot_27_bar__minus_01_dot_42 - receptacle
+        loc_bar_9_bar_4_bar_1_bar_60 - location
+        loc_bar_10_bar__minus_2_bar_2_bar_60 - location
+        loc_bar_8_bar__minus_3_bar_2_bar_45 - location
+        loc_bar_8_bar__minus_2_bar_1_bar_60 - location
+        loc_bar_3_bar_5_bar_3_bar_45 - location
+        loc_bar_10_bar_5_bar_0_bar_30 - location
+        loc_bar_3_bar__minus_2_bar_1_bar_60 - location
+        loc_bar_8_bar__minus_3_bar_1_bar_45 - location
+        loc_bar_0_bar__minus_4_bar_2_bar_15 - location
+        loc_bar__minus_3_bar__minus_4_bar_3_bar_60 - location
+        loc_bar_9_bar__minus_2_bar_2_bar_60 - location
+        loc_bar_1_bar__minus_4_bar_1_bar_30 - location
+        loc_bar__minus_3_bar__minus_2_bar_3_bar_45 - location
+        loc_bar_0_bar__minus_4_bar_2_bar__minus_30 - location
+        loc_bar__minus_3_bar__minus_3_bar_3_bar_60 - location
+        loc_bar_4_bar__minus_2_bar_2_bar_60 - location
+        loc_bar_10_bar_1_bar_1_bar_60 - location
+        loc_bar_7_bar__minus_3_bar_2_bar_45 - location
+        loc_bar__minus_3_bar__minus_2_bar_3_bar_60 - location
+        loc_bar_4_bar__minus_2_bar_1_bar_60 - location
+        loc_bar_8_bar_5_bar_0_bar_30 - location
+        loc_bar_8_bar__minus_3_bar_2_bar_30 - location
+        loc_bar_10_bar_5_bar_0_bar_60 - location
+        loc_bar_8_bar__minus_3_bar_2_bar_60 - location
+        loc_bar_10_bar__minus_2_bar_2_bar_45 - location
+        loc_bar__minus_3_bar__minus_4_bar_3_bar_45 - location
+        loc_bar_10_bar__minus_2_bar_2_bar_30 - location
+        loc_bar_5_bar_5_bar_0_bar_30 - location
+        )
+    
+
+(:init
+
+
+        (receptacleType Shelf_bar__plus_02_dot_25_bar__plus_01_dot_27_bar__minus_01_dot_42 ShelfType)
+        (receptacleType Drawer_bar__minus_01_dot_29_bar__plus_00_dot_44_bar__minus_00_dot_92 DrawerType)
+        (receptacleType Drawer_bar__minus_01_dot_29_bar__plus_00_dot_17_bar__minus_00_dot_58 DrawerType)
+        (receptacleType Drawer_bar__plus_01_dot_95_bar__plus_00_dot_62_bar__minus_01_dot_21 DrawerType)
+        (receptacleType Desk_bar__plus_02_dot_29_bar__plus_00_dot_01_bar__minus_01_dot_15 DeskType)
+        (receptacleType Drawer_bar__minus_01_dot_29_bar__plus_01_dot_02_bar__minus_00_dot_92 DrawerType)
+        (receptacleType Drawer_bar__minus_01_dot_29_bar__plus_01_dot_02_bar__minus_00_dot_58 DrawerType)
+        (receptacleType Drawer_bar__plus_01_dot_63_bar__plus_00_dot_40_bar__minus_01_dot_21 DrawerType)
+        (receptacleType Bed_bar__minus_00_dot_64_bar__plus_00_dot_00_bar__plus_00_dot_87 BedType)
+        (receptacleType Drawer_bar__plus_01_dot_63_bar__plus_00_dot_18_bar__minus_01_dot_21 DrawerType)
+        (receptacleType Drawer_bar__plus_02_dot_82_bar__plus_00_dot_62_bar__minus_01_dot_21 DrawerType)
+        (receptacleType Shelf_bar__plus_02_dot_47_bar__plus_00_dot_80_bar__minus_01_dot_41 ShelfType)
+        (receptacleType Drawer_bar__plus_01_dot_63_bar__plus_00_dot_62_bar__minus_01_dot_21 DrawerType)
+        (receptacleType Drawer_bar__minus_01_dot_29_bar__plus_00_dot_74_bar__minus_00_dot_58 DrawerType)
+        (receptacleType GarbageCan_bar__plus_02_dot_84_bar__plus_00_dot_00_bar__plus_00_dot_22 GarbageCanType)
+        (receptacleType Shelf_bar__plus_01_dot_80_bar__plus_00_dot_80_bar__minus_01_dot_42 ShelfType)
+        (receptacleType Shelf_bar__plus_01_dot_80_bar__plus_01_dot_04_bar__minus_01_dot_42 ShelfType)
+        (receptacleType Drawer_bar__plus_01_dot_95_bar__plus_00_dot_18_bar__minus_01_dot_21 DrawerType)
+        (receptacleType Drawer_bar__minus_01_dot_29_bar__plus_00_dot_74_bar__minus_00_dot_92 DrawerType)
+        (receptacleType Drawer_bar__plus_02_dot_82_bar__plus_00_dot_17_bar__minus_01_dot_21 DrawerType)
+        (receptacleType Shelf_bar__plus_02_dot_70_bar__plus_01_dot_27_bar__minus_01_dot_42 ShelfType)
+        (receptacleType Shelf_bar__plus_02_dot_47_bar__plus_01_dot_04_bar__minus_01_dot_41 ShelfType)
+        (receptacleType Drawer_bar__minus_01_dot_29_bar__plus_00_dot_44_bar__minus_00_dot_58 DrawerType)
+        (receptacleType Drawer_bar__plus_01_dot_95_bar__plus_00_dot_40_bar__minus_01_dot_21 DrawerType)
+        (receptacleType Dresser_bar__minus_01_dot_33_bar__plus_00_dot_00_bar__minus_00_dot_75 DresserType)
+        (receptacleType Drawer_bar__minus_01_dot_29_bar__plus_00_dot_17_bar__minus_00_dot_92 DrawerType)
+        (receptacleType Drawer_bar__plus_02_dot_82_bar__plus_00_dot_40_bar__minus_01_dot_21 DrawerType)
+        (objectType Bowl_bar__minus_01_dot_32_bar__plus_01_dot_23_bar__minus_00_dot_75 BowlType)
+        (objectType TissueBox_bar__minus_01_dot_29_bar__plus_00_dot_38_bar__minus_00_dot_61 TissueBoxType)
+        (objectType CreditCard_bar__plus_02_dot_85_bar__plus_00_dot_57_bar__minus_01_dot_22 CreditCardType)
+        (objectType Laptop_bar__minus_00_dot_29_bar__plus_00_dot_56_bar__plus_00_dot_85 LaptopType)
+        (objectType Watch_bar__plus_02_dot_17_bar__plus_01_dot_04_bar__minus_01_dot_43 WatchType)
+        (objectType AlarmClock_bar__plus_02_dot_59_bar__plus_00_dot_80_bar__minus_01_dot_22 AlarmClockType)
+        (objectType Pencil_bar__plus_02_dot_59_bar__plus_00_dot_81_bar__minus_01_dot_38 PencilType)
+        (objectType Mug_bar__plus_02_dot_82_bar__plus_00_dot_79_bar__minus_01_dot_22 MugType)
+        (objectType AlarmClock_bar__plus_02_dot_22_bar__plus_00_dot_80_bar__minus_01_dot_28 AlarmClockType)
+        (objectType BaseballBat_bar__plus_02_dot_85_bar__plus_00_dot_64_bar__plus_01_dot_84 BaseballBatType)
+        (objectType Box_bar__plus_02_dot_73_bar__plus_00_dot_20_bar__plus_00_dot_89 BoxType)
+        (objectType CreditCard_bar__plus_02_dot_59_bar__plus_01_dot_04_bar__minus_01_dot_40 CreditCardType)
+        (objectType Boots_bar__minus_01_dot_28_bar__plus_00_dot_00_bar__minus_01_dot_34 BootsType)
+        (objectType BasketBall_bar__plus_01_dot_02_bar__plus_00_dot_33_bar__minus_00_dot_98 BasketBallType)
+        (objectType CD_bar__plus_02_dot_79_bar__plus_00_dot_12_bar__minus_01_dot_25 CDType)
+        (objectType Watch_bar__plus_01_dot_51_bar__plus_00_dot_80_bar__minus_01_dot_40 WatchType)
+        (objectType Window_bar__plus_00_dot_12_bar__plus_01_dot_50_bar__minus_01_dot_59 WindowType)
+        (objectType CreditCard_bar__plus_01_dot_65_bar__plus_00_dot_79_bar__minus_01_dot_12 CreditCardType)
+        (objectType Statue_bar__plus_01_dot_82_bar__plus_01_dot_04_bar__minus_01_dot_42 StatueType)
+        (objectType CellPhone_bar__plus_01_dot_84_bar__plus_00_dot_80_bar__minus_01_dot_19 CellPhoneType)
+        (objectType DeskLamp_bar__minus_01_dot_31_bar__plus_01_dot_23_bar__minus_00_dot_99 DeskLampType)
+        (objectType Mug_bar__plus_02_dot_40_bar__plus_00_dot_79_bar__minus_01_dot_25 MugType)
+        (objectType Watch_bar__minus_01_dot_35_bar__plus_00_dot_11_bar__minus_00_dot_58 WatchType)
+        (objectType Watch_bar__plus_01_dot_96_bar__plus_01_dot_05_bar__minus_01_dot_40 WatchType)
+        (objectType CD_bar__plus_02_dot_84_bar__plus_00_dot_04_bar__plus_00_dot_18 CDType)
+        (objectType Book_bar__minus_00_dot_90_bar__plus_00_dot_57_bar__plus_01_dot_18 BookType)
+        (objectType LightSwitch_bar__plus_02_dot_66_bar__plus_01_dot_28_bar__plus_01_dot_90 LightSwitchType)
+        (objectType CellPhone_bar__minus_01_dot_25_bar__plus_01_dot_24_bar__minus_00_dot_55 CellPhoneType)
+        (objectType TissueBox_bar__minus_01_dot_29_bar__plus_00_dot_68_bar__minus_00_dot_54 TissueBoxType)
+        (objectType Mirror_bar__plus_01_dot_99_bar__plus_01_dot_38_bar__plus_01_dot_88 MirrorType)
+        (objectType Chair_bar__plus_02_dot_40_bar__plus_00_dot_00_bar__minus_01_dot_08 ChairType)
+        (objectType KeyChain_bar__minus_01_dot_35_bar__plus_01_dot_23_bar__minus_00_dot_55 KeyChainType)
+        (objectType CD_bar__minus_01_dot_35_bar__plus_00_dot_11_bar__minus_00_dot_88 CDType)
+        (objectType Blinds_bar__plus_00_dot_11_bar__plus_02_dot_34_bar__minus_01_dot_44 BlindsType)
+        (objectType Pen_bar__plus_02_dot_22_bar__plus_00_dot_80_bar__minus_01_dot_12 PenType)
+        (objectType Pillow_bar__minus_00_dot_63_bar__plus_00_dot_63_bar__plus_01_dot_61 PillowType)
+        (canContain ShelfType PenType)
+        (canContain ShelfType BookType)
+        (canContain ShelfType WatchType)
+        (canContain ShelfType BowlType)
+        (canContain ShelfType CDType)
+        (canContain ShelfType MugType)
+        (canContain ShelfType BoxType)
+        (canContain ShelfType CellPhoneType)
+        (canContain ShelfType KeyChainType)
+        (canContain ShelfType CreditCardType)
+        (canContain ShelfType PencilType)
+        (canContain ShelfType TissueBoxType)
+        (canContain ShelfType StatueType)
+        (canContain ShelfType AlarmClockType)
+        (canContain DrawerType PenType)
+        (canContain DrawerType BookType)
+        (canContain DrawerType WatchType)
+        (canContain DrawerType CDType)
+        (canContain DrawerType CellPhoneType)
+        (canContain DrawerType KeyChainType)
+        (canContain DrawerType CreditCardType)
+        (canContain DrawerType PencilType)
+        (canContain DrawerType TissueBoxType)
+        (canContain DrawerType PenType)
+        (canContain DrawerType BookType)
+        (canContain DrawerType WatchType)
+        (canContain DrawerType CDType)
+        (canContain DrawerType CellPhoneType)
+        (canContain DrawerType KeyChainType)
+        (canContain DrawerType CreditCardType)
+        (canContain DrawerType PencilType)
+        (canContain DrawerType TissueBoxType)
+        (canContain DrawerType PenType)
+        (canContain DrawerType BookType)
+        (canContain DrawerType WatchType)
+        (canContain DrawerType CDType)
+        (canContain DrawerType CellPhoneType)
+        (canContain DrawerType KeyChainType)
+        (canContain DrawerType CreditCardType)
+        (canContain DrawerType PencilType)
+        (canContain DrawerType TissueBoxType)
+        (canContain DeskType PenType)
+        (canContain DeskType BookType)
+        (canContain DeskType WatchType)
+        (canContain DeskType BowlType)
+        (canContain DeskType CDType)
+        (canContain DeskType MugType)
+        (canContain DeskType BoxType)
+        (canContain DeskType CellPhoneType)
+        (canContain DeskType KeyChainType)
+        (canContain DeskType CreditCardType)
+        (canContain DeskType BasketBallType)
+        (canContain DeskType LaptopType)
+        (canContain DeskType PencilType)
+        (canContain DeskType TissueBoxType)
+        (canContain DeskType StatueType)
+        (canContain DeskType AlarmClockType)
+        (canContain DrawerType PenType)
+        (canContain DrawerType BookType)
+        (canContain DrawerType WatchType)
+        (canContain DrawerType CDType)
+        (canContain DrawerType CellPhoneType)
+        (canContain DrawerType KeyChainType)
+        (canContain DrawerType CreditCardType)
+        (canContain DrawerType PencilType)
+        (canContain DrawerType TissueBoxType)
+        (canContain DrawerType PenType)
+        (canContain DrawerType BookType)
+        (canContain DrawerType WatchType)
+        (canContain DrawerType CDType)
+        (canContain DrawerType CellPhoneType)
+        (canContain DrawerType KeyChainType)
+        (canContain DrawerType CreditCardType)
+        (canContain DrawerType PencilType)
+        (canContain DrawerType TissueBoxType)
+        (canContain DrawerType PenType)
+        (canContain DrawerType BookType)
+        (canContain DrawerType WatchType)
+        (canContain DrawerType CDType)
+        (canContain DrawerType CellPhoneType)
+        (canContain DrawerType KeyChainType)
+        (canContain DrawerType CreditCardType)
+        (canContain DrawerType PencilType)
+        (canContain DrawerType TissueBoxType)
+        (canContain BedType BasketBallType)
+        (canContain BedType BaseballBatType)
+        (canContain BedType LaptopType)
+        (canContain BedType BookType)
+        (canContain BedType CellPhoneType)
+        (canContain BedType PillowType)
+        (canContain DrawerType PenType)
+        (canContain DrawerType BookType)
+        (canContain DrawerType WatchType)
+        (canContain DrawerType CDType)
+        (canContain DrawerType CellPhoneType)
+        (canContain DrawerType KeyChainType)
+        (canContain DrawerType CreditCardType)
+        (canContain DrawerType PencilType)
+        (canContain DrawerType TissueBoxType)
+        (canContain DrawerType PenType)
+        (canContain DrawerType BookType)
+        (canContain DrawerType WatchType)
+        (canContain DrawerType CDType)
+        (canContain DrawerType CellPhoneType)
+        (canContain DrawerType KeyChainType)
+        (canContain DrawerType CreditCardType)
+        (canContain DrawerType PencilType)
+        (canContain DrawerType TissueBoxType)
+        (canContain ShelfType PenType)
+        (canContain ShelfType BookType)
+        (canContain ShelfType WatchType)
+        (canContain ShelfType BowlType)
+        (canContain ShelfType CDType)
+        (canContain ShelfType MugType)
+        (canContain ShelfType BoxType)
+        (canContain ShelfType CellPhoneType)
+        (canContain ShelfType KeyChainType)
+        (canContain ShelfType CreditCardType)
+        (canContain ShelfType PencilType)
+        (canContain ShelfType TissueBoxType)
+        (canContain ShelfType StatueType)
+        (canContain ShelfType AlarmClockType)
+        (canContain DrawerType PenType)
+        (canContain DrawerType BookType)
+        (canContain DrawerType WatchType)
+        (canContain DrawerType CDType)
+        (canContain DrawerType CellPhoneType)
+        (canContain DrawerType KeyChainType)
+        (canContain DrawerType CreditCardType)
+        (canContain DrawerType PencilType)
+        (canContain DrawerType TissueBoxType)
+        (canContain DrawerType PenType)
+        (canContain DrawerType BookType)
+        (canContain DrawerType WatchType)
+        (canContain DrawerType CDType)
+        (canContain DrawerType CellPhoneType)
+        (canContain DrawerType KeyChainType)
+        (canContain DrawerType CreditCardType)
+        (canContain DrawerType PencilType)
+        (canContain DrawerType TissueBoxType)
+        (canContain GarbageCanType PenType)
+        (canContain GarbageCanType CDType)
+        (canContain GarbageCanType PencilType)
+        (canContain GarbageCanType TissueBoxType)
+        (canContain ShelfType PenType)
+        (canContain ShelfType BookType)
+        (canContain ShelfType WatchType)
+        (canContain ShelfType BowlType)
+        (canContain ShelfType CDType)
+        (canContain ShelfType MugType)
+        (canContain ShelfType BoxType)
+        (canContain ShelfType CellPhoneType)
+        (canContain ShelfType KeyChainType)
+        (canContain ShelfType CreditCardType)
+        (canContain ShelfType PencilType)
+        (canContain ShelfType TissueBoxType)
+        (canContain ShelfType StatueType)
+        (canContain ShelfType AlarmClockType)
+        (canContain ShelfType PenType)
+        (canContain ShelfType BookType)
+        (canContain ShelfType WatchType)
+        (canContain ShelfType BowlType)
+        (canContain ShelfType CDType)
+        (canContain ShelfType MugType)
+        (canContain ShelfType BoxType)
+        (canContain ShelfType CellPhoneType)
+        (canContain ShelfType KeyChainType)
+        (canContain ShelfType CreditCardType)
+        (canContain ShelfType PencilType)
+        (canContain ShelfType TissueBoxType)
+        (canContain ShelfType StatueType)
+        (canContain ShelfType AlarmClockType)
+        (canContain DrawerType PenType)
+        (canContain DrawerType BookType)
+        (canContain DrawerType WatchType)
+        (canContain DrawerType CDType)
+        (canContain DrawerType CellPhoneType)
+        (canContain DrawerType KeyChainType)
+        (canContain DrawerType CreditCardType)
+        (canContain DrawerType PencilType)
+        (canContain DrawerType TissueBoxType)
+        (canContain DrawerType PenType)
+        (canContain DrawerType BookType)
+        (canContain DrawerType WatchType)
+        (canContain DrawerType CDType)
+        (canContain DrawerType CellPhoneType)
+        (canContain DrawerType KeyChainType)
+        (canContain DrawerType CreditCardType)
+        (canContain DrawerType PencilType)
+        (canContain DrawerType TissueBoxType)
+        (canContain DrawerType PenType)
+        (canContain DrawerType BookType)
+        (canContain DrawerType WatchType)
+        (canContain DrawerType CDType)
+        (canContain DrawerType CellPhoneType)
+        (canContain DrawerType KeyChainType)
+        (canContain DrawerType CreditCardType)
+        (canContain DrawerType PencilType)
+        (canContain DrawerType TissueBoxType)
+        (canContain ShelfType PenType)
+        (canContain ShelfType BookType)
+        (canContain ShelfType WatchType)
+        (canContain ShelfType BowlType)
+        (canContain ShelfType CDType)
+        (canContain ShelfType MugType)
+        (canContain ShelfType BoxType)
+        (canContain ShelfType CellPhoneType)
+        (canContain ShelfType KeyChainType)
+        (canContain ShelfType CreditCardType)
+        (canContain ShelfType PencilType)
+        (canContain ShelfType TissueBoxType)
+        (canContain ShelfType StatueType)
+        (canContain ShelfType AlarmClockType)
+        (canContain ShelfType PenType)
+        (canContain ShelfType BookType)
+        (canContain ShelfType WatchType)
+        (canContain ShelfType BowlType)
+        (canContain ShelfType CDType)
+        (canContain ShelfType MugType)
+        (canContain ShelfType BoxType)
+        (canContain ShelfType CellPhoneType)
+        (canContain ShelfType KeyChainType)
+        (canContain ShelfType CreditCardType)
+        (canContain ShelfType PencilType)
+        (canContain ShelfType TissueBoxType)
+        (canContain ShelfType StatueType)
+        (canContain ShelfType AlarmClockType)
+        (canContain DrawerType PenType)
+        (canContain DrawerType BookType)
+        (canContain DrawerType WatchType)
+        (canContain DrawerType CDType)
+        (canContain DrawerType CellPhoneType)
+        (canContain DrawerType KeyChainType)
+        (canContain DrawerType CreditCardType)
+        (canContain DrawerType PencilType)
+        (canContain DrawerType TissueBoxType)
+        (canContain DrawerType PenType)
+        (canContain DrawerType BookType)
+        (canContain DrawerType WatchType)
+        (canContain DrawerType CDType)
+        (canContain DrawerType CellPhoneType)
+        (canContain DrawerType KeyChainType)
+        (canContain DrawerType CreditCardType)
+        (canContain DrawerType PencilType)
+        (canContain DrawerType TissueBoxType)
+        (canContain DresserType PenType)
+        (canContain DresserType BookType)
+        (canContain DresserType WatchType)
+        (canContain DresserType BowlType)
+        (canContain DresserType CDType)
+        (canContain DresserType MugType)
+        (canContain DresserType BoxType)
+        (canContain DresserType CellPhoneType)
+        (canContain DresserType KeyChainType)
+        (canContain DresserType CreditCardType)
+        (canContain DresserType BasketBallType)
+        (canContain DresserType LaptopType)
+        (canContain DresserType PencilType)
+        (canContain DresserType TissueBoxType)
+        (canContain DresserType StatueType)
+        (canContain DresserType AlarmClockType)
+        (canContain DrawerType PenType)
+        (canContain DrawerType BookType)
+        (canContain DrawerType WatchType)
+        (canContain DrawerType CDType)
+        (canContain DrawerType CellPhoneType)
+        (canContain DrawerType KeyChainType)
+        (canContain DrawerType CreditCardType)
+        (canContain DrawerType PencilType)
+        (canContain DrawerType TissueBoxType)
+        (canContain DrawerType PenType)
+        (canContain DrawerType BookType)
+        (canContain DrawerType WatchType)
+        (canContain DrawerType CDType)
+        (canContain DrawerType CellPhoneType)
+        (canContain DrawerType KeyChainType)
+        (canContain DrawerType CreditCardType)
+        (canContain DrawerType PencilType)
+        (canContain DrawerType TissueBoxType)
+        (pickupable Bowl_bar__minus_01_dot_32_bar__plus_01_dot_23_bar__minus_00_dot_75)
+        (pickupable TissueBox_bar__minus_01_dot_29_bar__plus_00_dot_38_bar__minus_00_dot_61)
+        (pickupable CreditCard_bar__plus_02_dot_85_bar__plus_00_dot_57_bar__minus_01_dot_22)
+        (pickupable Laptop_bar__minus_00_dot_29_bar__plus_00_dot_56_bar__plus_00_dot_85)
+        (pickupable Watch_bar__plus_02_dot_17_bar__plus_01_dot_04_bar__minus_01_dot_43)
+        (pickupable AlarmClock_bar__plus_02_dot_59_bar__plus_00_dot_80_bar__minus_01_dot_22)
+        (pickupable Pencil_bar__plus_02_dot_59_bar__plus_00_dot_81_bar__minus_01_dot_38)
+        (pickupable Mug_bar__plus_02_dot_82_bar__plus_00_dot_79_bar__minus_01_dot_22)
+        (pickupable AlarmClock_bar__plus_02_dot_22_bar__plus_00_dot_80_bar__minus_01_dot_28)
+        (pickupable BaseballBat_bar__plus_02_dot_85_bar__plus_00_dot_64_bar__plus_01_dot_84)
+        (pickupable Box_bar__plus_02_dot_73_bar__plus_00_dot_20_bar__plus_00_dot_89)
+        (pickupable CreditCard_bar__plus_02_dot_59_bar__plus_01_dot_04_bar__minus_01_dot_40)
+        (pickupable Boots_bar__minus_01_dot_28_bar__plus_00_dot_00_bar__minus_01_dot_34)
+        (pickupable BasketBall_bar__plus_01_dot_02_bar__plus_00_dot_33_bar__minus_00_dot_98)
+        (pickupable CD_bar__plus_02_dot_79_bar__plus_00_dot_12_bar__minus_01_dot_25)
+        (pickupable Watch_bar__plus_01_dot_51_bar__plus_00_dot_80_bar__minus_01_dot_40)
+        (pickupable CreditCard_bar__plus_01_dot_65_bar__plus_00_dot_79_bar__minus_01_dot_12)
+        (pickupable Statue_bar__plus_01_dot_82_bar__plus_01_dot_04_bar__minus_01_dot_42)
+        (pickupable CellPhone_bar__plus_01_dot_84_bar__plus_00_dot_80_bar__minus_01_dot_19)
+        (pickupable Mug_bar__plus_02_dot_40_bar__plus_00_dot_79_bar__minus_01_dot_25)
+        (pickupable Watch_bar__minus_01_dot_35_bar__plus_00_dot_11_bar__minus_00_dot_58)
+        (pickupable Watch_bar__plus_01_dot_96_bar__plus_01_dot_05_bar__minus_01_dot_40)
+        (pickupable CD_bar__plus_02_dot_84_bar__plus_00_dot_04_bar__plus_00_dot_18)
+        (pickupable Book_bar__minus_00_dot_90_bar__plus_00_dot_57_bar__plus_01_dot_18)
+        (pickupable CellPhone_bar__minus_01_dot_25_bar__plus_01_dot_24_bar__minus_00_dot_55)
+        (pickupable TissueBox_bar__minus_01_dot_29_bar__plus_00_dot_68_bar__minus_00_dot_54)
+        (pickupable KeyChain_bar__minus_01_dot_35_bar__plus_01_dot_23_bar__minus_00_dot_55)
+        (pickupable CD_bar__minus_01_dot_35_bar__plus_00_dot_11_bar__minus_00_dot_88)
+        (pickupable Pen_bar__plus_02_dot_22_bar__plus_00_dot_80_bar__minus_01_dot_12)
+        (pickupable Pillow_bar__minus_00_dot_63_bar__plus_00_dot_63_bar__plus_01_dot_61)
+        (isReceptacleObject Bowl_bar__minus_01_dot_32_bar__plus_01_dot_23_bar__minus_00_dot_75)
+        (isReceptacleObject Mug_bar__plus_02_dot_82_bar__plus_00_dot_79_bar__minus_01_dot_22)
+        (isReceptacleObject Box_bar__plus_02_dot_73_bar__plus_00_dot_20_bar__plus_00_dot_89)
+        (isReceptacleObject Mug_bar__plus_02_dot_40_bar__plus_00_dot_79_bar__minus_01_dot_25)
+        (openable Drawer_bar__plus_01_dot_63_bar__plus_00_dot_40_bar__minus_01_dot_21)
+        (openable Drawer_bar__plus_01_dot_63_bar__plus_00_dot_18_bar__minus_01_dot_21)
+        (openable Drawer_bar__plus_02_dot_82_bar__plus_00_dot_62_bar__minus_01_dot_21)
+        (openable Drawer_bar__plus_01_dot_63_bar__plus_00_dot_62_bar__minus_01_dot_21)
+        (openable Drawer_bar__plus_01_dot_95_bar__plus_00_dot_18_bar__minus_01_dot_21)
+        (openable Drawer_bar__plus_01_dot_95_bar__plus_00_dot_40_bar__minus_01_dot_21)
+        (openable Drawer_bar__plus_02_dot_82_bar__plus_00_dot_40_bar__minus_01_dot_21)
+        
+        (atLocation agent1 loc_bar_5_bar_5_bar_0_bar_30)
+        
+        (cleanable Bowl_bar__minus_01_dot_32_bar__plus_01_dot_23_bar__minus_00_dot_75)
+        (cleanable Mug_bar__plus_02_dot_82_bar__plus_00_dot_79_bar__minus_01_dot_22)
+        (cleanable Mug_bar__plus_02_dot_40_bar__plus_00_dot_79_bar__minus_01_dot_25)
+        
+        (heatable Mug_bar__plus_02_dot_82_bar__plus_00_dot_79_bar__minus_01_dot_22)
+        (heatable Mug_bar__plus_02_dot_40_bar__plus_00_dot_79_bar__minus_01_dot_25)
+        (coolable Bowl_bar__minus_01_dot_32_bar__plus_01_dot_23_bar__minus_00_dot_75)
+        (coolable Mug_bar__plus_02_dot_82_bar__plus_00_dot_79_bar__minus_01_dot_22)
+        (coolable Mug_bar__plus_02_dot_40_bar__plus_00_dot_79_bar__minus_01_dot_25)
+        
+        
+        (toggleable DeskLamp_bar__minus_01_dot_31_bar__plus_01_dot_23_bar__minus_00_dot_99)
+        
+        
+        
+        
+        (inReceptacle CD_bar__plus_02_dot_79_bar__plus_00_dot_12_bar__minus_01_dot_25 Drawer_bar__plus_02_dot_82_bar__plus_00_dot_17_bar__minus_01_dot_21)
+        (inReceptacle CD_bar__minus_01_dot_35_bar__plus_00_dot_11_bar__minus_00_dot_88 Drawer_bar__minus_01_dot_29_bar__plus_00_dot_17_bar__minus_00_dot_92)
+        (inReceptacle Mug_bar__plus_02_dot_82_bar__plus_00_dot_79_bar__minus_01_dot_22 Desk_bar__plus_02_dot_29_bar__plus_00_dot_01_bar__minus_01_dot_15)
+        (inReceptacle AlarmClock_bar__plus_02_dot_22_bar__plus_00_dot_80_bar__minus_01_dot_28 Desk_bar__plus_02_dot_29_bar__plus_00_dot_01_bar__minus_01_dot_15)
+        (inReceptacle CellPhone_bar__plus_01_dot_84_bar__plus_00_dot_80_bar__minus_01_dot_19 Desk_bar__plus_02_dot_29_bar__plus_00_dot_01_bar__minus_01_dot_15)
+        (inReceptacle Pen_bar__plus_02_dot_22_bar__plus_00_dot_80_bar__minus_01_dot_12 Desk_bar__plus_02_dot_29_bar__plus_00_dot_01_bar__minus_01_dot_15)
+        (inReceptacle Watch_bar__plus_01_dot_51_bar__plus_00_dot_80_bar__minus_01_dot_40 Desk_bar__plus_02_dot_29_bar__plus_00_dot_01_bar__minus_01_dot_15)
+        (inReceptacle Mug_bar__plus_02_dot_40_bar__plus_00_dot_79_bar__minus_01_dot_25 Desk_bar__plus_02_dot_29_bar__plus_00_dot_01_bar__minus_01_dot_15)
+        (inReceptacle AlarmClock_bar__plus_02_dot_59_bar__plus_00_dot_80_bar__minus_01_dot_22 Desk_bar__plus_02_dot_29_bar__plus_00_dot_01_bar__minus_01_dot_15)
+        (inReceptacle CreditCard_bar__plus_01_dot_65_bar__plus_00_dot_79_bar__minus_01_dot_12 Desk_bar__plus_02_dot_29_bar__plus_00_dot_01_bar__minus_01_dot_15)
+        (inReceptacle TissueBox_bar__minus_01_dot_29_bar__plus_00_dot_38_bar__minus_00_dot_61 Drawer_bar__minus_01_dot_29_bar__plus_00_dot_44_bar__minus_00_dot_58)
+        (inReceptacle Watch_bar__minus_01_dot_35_bar__plus_00_dot_11_bar__minus_00_dot_58 Drawer_bar__minus_01_dot_29_bar__plus_00_dot_17_bar__minus_00_dot_58)
+        (inReceptacle CreditCard_bar__plus_02_dot_85_bar__plus_00_dot_57_bar__minus_01_dot_22 Drawer_bar__plus_02_dot_82_bar__plus_00_dot_62_bar__minus_01_dot_21)
+        (inReceptacle DeskLamp_bar__minus_01_dot_31_bar__plus_01_dot_23_bar__minus_00_dot_99 Dresser_bar__minus_01_dot_33_bar__plus_00_dot_00_bar__minus_00_dot_75)
+        (inReceptacle KeyChain_bar__minus_01_dot_35_bar__plus_01_dot_23_bar__minus_00_dot_55 Dresser_bar__minus_01_dot_33_bar__plus_00_dot_00_bar__minus_00_dot_75)
+        (inReceptacle Bowl_bar__minus_01_dot_32_bar__plus_01_dot_23_bar__minus_00_dot_75 Dresser_bar__minus_01_dot_33_bar__plus_00_dot_00_bar__minus_00_dot_75)
+        (inReceptacle CellPhone_bar__minus_01_dot_25_bar__plus_01_dot_24_bar__minus_00_dot_55 Dresser_bar__minus_01_dot_33_bar__plus_00_dot_00_bar__minus_00_dot_75)
+        (inReceptacle TissueBox_bar__minus_01_dot_29_bar__plus_00_dot_68_bar__minus_00_dot_54 Drawer_bar__minus_01_dot_29_bar__plus_00_dot_74_bar__minus_00_dot_58)
+        (inReceptacle Book_bar__minus_00_dot_90_bar__plus_00_dot_57_bar__plus_01_dot_18 Bed_bar__minus_00_dot_64_bar__plus_00_dot_00_bar__plus_00_dot_87)
+        (inReceptacle Laptop_bar__minus_00_dot_29_bar__plus_00_dot_56_bar__plus_00_dot_85 Bed_bar__minus_00_dot_64_bar__plus_00_dot_00_bar__plus_00_dot_87)
+        (inReceptacle Pillow_bar__minus_00_dot_63_bar__plus_00_dot_63_bar__plus_01_dot_61 Bed_bar__minus_00_dot_64_bar__plus_00_dot_00_bar__plus_00_dot_87)
+        (inReceptacle CreditCard_bar__plus_02_dot_59_bar__plus_01_dot_04_bar__minus_01_dot_40 Shelf_bar__plus_02_dot_47_bar__plus_01_dot_04_bar__minus_01_dot_41)
+        (inReceptacle Watch_bar__plus_02_dot_17_bar__plus_01_dot_04_bar__minus_01_dot_43 Shelf_bar__plus_02_dot_47_bar__plus_01_dot_04_bar__minus_01_dot_41)
+        (inReceptacle Statue_bar__plus_01_dot_82_bar__plus_01_dot_04_bar__minus_01_dot_42 Shelf_bar__plus_01_dot_80_bar__plus_01_dot_04_bar__minus_01_dot_42)
+        (inReceptacle Watch_bar__plus_01_dot_96_bar__plus_01_dot_05_bar__minus_01_dot_40 Shelf_bar__plus_01_dot_80_bar__plus_01_dot_04_bar__minus_01_dot_42)
+        (inReceptacle Pencil_bar__plus_02_dot_59_bar__plus_00_dot_81_bar__minus_01_dot_38 Shelf_bar__plus_02_dot_47_bar__plus_00_dot_80_bar__minus_01_dot_41)
+        
+        
+        (receptacleAtLocation Bed_bar__minus_00_dot_64_bar__plus_00_dot_00_bar__plus_00_dot_87 loc_bar_3_bar_5_bar_3_bar_45)
+        (receptacleAtLocation Desk_bar__plus_02_dot_29_bar__plus_00_dot_01_bar__minus_01_dot_15 loc_bar_9_bar__minus_2_bar_2_bar_60)
+        (receptacleAtLocation Drawer_bar__plus_01_dot_63_bar__plus_00_dot_18_bar__minus_01_dot_21 loc_bar_3_bar__minus_2_bar_1_bar_60)
+        (receptacleAtLocation Drawer_bar__plus_01_dot_63_bar__plus_00_dot_40_bar__minus_01_dot_21 loc_bar_3_bar__minus_2_bar_1_bar_60)
+        (receptacleAtLocation Drawer_bar__plus_01_dot_63_bar__plus_00_dot_62_bar__minus_01_dot_21 loc_bar_1_bar__minus_4_bar_1_bar_30)
+        (receptacleAtLocation Drawer_bar__plus_01_dot_95_bar__plus_00_dot_18_bar__minus_01_dot_21 loc_bar_4_bar__minus_2_bar_1_bar_60)
+        (receptacleAtLocation Drawer_bar__plus_01_dot_95_bar__plus_00_dot_40_bar__minus_01_dot_21 loc_bar_4_bar__minus_2_bar_1_bar_60)
+        (receptacleAtLocation Drawer_bar__plus_01_dot_95_bar__plus_00_dot_62_bar__minus_01_dot_21 loc_bar_8_bar__minus_3_bar_2_bar_60)
+        (receptacleAtLocation Drawer_bar__plus_02_dot_82_bar__plus_00_dot_17_bar__minus_01_dot_21 loc_bar_10_bar__minus_2_bar_2_bar_60)
+        (receptacleAtLocation Drawer_bar__plus_02_dot_82_bar__plus_00_dot_40_bar__minus_01_dot_21 loc_bar_8_bar__minus_2_bar_1_bar_60)
+        (receptacleAtLocation Drawer_bar__plus_02_dot_82_bar__plus_00_dot_62_bar__minus_01_dot_21 loc_bar_8_bar__minus_3_bar_1_bar_45)
+        (receptacleAtLocation Drawer_bar__minus_01_dot_29_bar__plus_00_dot_17_bar__minus_00_dot_58 loc_bar__minus_3_bar__minus_2_bar_3_bar_60)
+        (receptacleAtLocation Drawer_bar__minus_01_dot_29_bar__plus_00_dot_17_bar__minus_00_dot_92 loc_bar__minus_3_bar__minus_4_bar_3_bar_60)
+        (receptacleAtLocation Drawer_bar__minus_01_dot_29_bar__plus_00_dot_44_bar__minus_00_dot_58 loc_bar__minus_3_bar__minus_2_bar_3_bar_60)
+        (receptacleAtLocation Drawer_bar__minus_01_dot_29_bar__plus_00_dot_44_bar__minus_00_dot_92 loc_bar__minus_3_bar__minus_4_bar_3_bar_60)
+        (receptacleAtLocation Drawer_bar__minus_01_dot_29_bar__plus_00_dot_74_bar__minus_00_dot_58 loc_bar__minus_3_bar__minus_2_bar_3_bar_60)
+        (receptacleAtLocation Drawer_bar__minus_01_dot_29_bar__plus_00_dot_74_bar__minus_00_dot_92 loc_bar__minus_3_bar__minus_4_bar_3_bar_60)
+        (receptacleAtLocation Drawer_bar__minus_01_dot_29_bar__plus_01_dot_02_bar__minus_00_dot_58 loc_bar__minus_3_bar__minus_2_bar_3_bar_45)
+        (receptacleAtLocation Drawer_bar__minus_01_dot_29_bar__plus_01_dot_02_bar__minus_00_dot_92 loc_bar__minus_3_bar__minus_4_bar_3_bar_45)
+        (receptacleAtLocation Dresser_bar__minus_01_dot_33_bar__plus_00_dot_00_bar__minus_00_dot_75 loc_bar__minus_3_bar__minus_3_bar_3_bar_60)
+        (receptacleAtLocation GarbageCan_bar__plus_02_dot_84_bar__plus_00_dot_00_bar__plus_00_dot_22 loc_bar_10_bar_1_bar_1_bar_60)
+        (receptacleAtLocation Shelf_bar__plus_01_dot_80_bar__plus_00_dot_80_bar__minus_01_dot_42 loc_bar_8_bar__minus_3_bar_2_bar_45)
+        (receptacleAtLocation Shelf_bar__plus_01_dot_80_bar__plus_01_dot_04_bar__minus_01_dot_42 loc_bar_7_bar__minus_3_bar_2_bar_45)
+        (receptacleAtLocation Shelf_bar__plus_02_dot_25_bar__plus_01_dot_27_bar__minus_01_dot_42 loc_bar_8_bar__minus_3_bar_2_bar_30)
+        (receptacleAtLocation Shelf_bar__plus_02_dot_47_bar__plus_00_dot_80_bar__minus_01_dot_41 loc_bar_10_bar__minus_2_bar_2_bar_45)
+        (receptacleAtLocation Shelf_bar__plus_02_dot_47_bar__plus_01_dot_04_bar__minus_01_dot_41 loc_bar_10_bar__minus_2_bar_2_bar_30)
+        (receptacleAtLocation Shelf_bar__plus_02_dot_70_bar__plus_01_dot_27_bar__minus_01_dot_42 loc_bar_10_bar__minus_2_bar_2_bar_30)
+        (objectAtLocation Mug_bar__plus_02_dot_82_bar__plus_00_dot_79_bar__minus_01_dot_22 loc_bar_9_bar__minus_2_bar_2_bar_60)
+        (objectAtLocation CD_bar__plus_02_dot_79_bar__plus_00_dot_12_bar__minus_01_dot_25 loc_bar_10_bar__minus_2_bar_2_bar_60)
+        (objectAtLocation Watch_bar__plus_01_dot_51_bar__plus_00_dot_80_bar__minus_01_dot_40 loc_bar_9_bar__minus_2_bar_2_bar_60)
+        (objectAtLocation AlarmClock_bar__plus_02_dot_22_bar__plus_00_dot_80_bar__minus_01_dot_28 loc_bar_9_bar__minus_2_bar_2_bar_60)
+        (objectAtLocation CreditCard_bar__plus_02_dot_85_bar__plus_00_dot_57_bar__minus_01_dot_22 loc_bar_8_bar__minus_3_bar_1_bar_45)
+        (objectAtLocation TissueBox_bar__minus_01_dot_29_bar__plus_00_dot_38_bar__minus_00_dot_61 loc_bar__minus_3_bar__minus_2_bar_3_bar_60)
+        (objectAtLocation CellPhone_bar__minus_01_dot_25_bar__plus_01_dot_24_bar__minus_00_dot_55 loc_bar__minus_3_bar__minus_3_bar_3_bar_60)
+        (objectAtLocation CreditCard_bar__plus_01_dot_65_bar__plus_00_dot_79_bar__minus_01_dot_12 loc_bar_9_bar__minus_2_bar_2_bar_60)
+        (objectAtLocation CD_bar__plus_02_dot_84_bar__plus_00_dot_04_bar__plus_00_dot_18 loc_bar_10_bar_1_bar_1_bar_60)
+        (objectAtLocation Watch_bar__minus_01_dot_35_bar__plus_00_dot_11_bar__minus_00_dot_58 loc_bar__minus_3_bar__minus_2_bar_3_bar_60)
+        (objectAtLocation Watch_bar__plus_01_dot_96_bar__plus_01_dot_05_bar__minus_01_dot_40 loc_bar_7_bar__minus_3_bar_2_bar_45)
+        (objectAtLocation Book_bar__minus_00_dot_90_bar__plus_00_dot_57_bar__plus_01_dot_18 loc_bar_3_bar_5_bar_3_bar_45)
+        (objectAtLocation Box_bar__plus_02_dot_73_bar__plus_00_dot_20_bar__plus_00_dot_89 loc_bar_9_bar_4_bar_1_bar_60)
+        (objectAtLocation Chair_bar__plus_02_dot_40_bar__plus_00_dot_00_bar__minus_01_dot_08 loc_bar_10_bar__minus_2_bar_2_bar_60)
+        (objectAtLocation Laptop_bar__minus_00_dot_29_bar__plus_00_dot_56_bar__plus_00_dot_85 loc_bar_3_bar_5_bar_3_bar_45)
+        (objectAtLocation CellPhone_bar__plus_01_dot_84_bar__plus_00_dot_80_bar__minus_01_dot_19 loc_bar_9_bar__minus_2_bar_2_bar_60)
+        (objectAtLocation BaseballBat_bar__plus_02_dot_85_bar__plus_00_dot_64_bar__plus_01_dot_84 loc_bar_10_bar_5_bar_0_bar_60)
+        (objectAtLocation DeskLamp_bar__minus_01_dot_31_bar__plus_01_dot_23_bar__minus_00_dot_99 loc_bar__minus_3_bar__minus_3_bar_3_bar_60)
+        (objectAtLocation BasketBall_bar__plus_01_dot_02_bar__plus_00_dot_33_bar__minus_00_dot_98 loc_bar_4_bar__minus_2_bar_2_bar_60)
+        (objectAtLocation TissueBox_bar__minus_01_dot_29_bar__plus_00_dot_68_bar__minus_00_dot_54 loc_bar__minus_3_bar__minus_2_bar_3_bar_60)
+        (objectAtLocation CreditCard_bar__plus_02_dot_59_bar__plus_01_dot_04_bar__minus_01_dot_40 loc_bar_10_bar__minus_2_bar_2_bar_30)
+        (objectAtLocation AlarmClock_bar__plus_02_dot_59_bar__plus_00_dot_80_bar__minus_01_dot_22 loc_bar_9_bar__minus_2_bar_2_bar_60)
+        (objectAtLocation Pencil_bar__plus_02_dot_59_bar__plus_00_dot_81_bar__minus_01_dot_38 loc_bar_10_bar__minus_2_bar_2_bar_45)
+        (objectAtLocation Boots_bar__minus_01_dot_28_bar__plus_00_dot_00_bar__minus_01_dot_34 loc_bar__minus_3_bar__minus_4_bar_3_bar_60)
+        (objectAtLocation Blinds_bar__plus_00_dot_11_bar__plus_02_dot_34_bar__minus_01_dot_44 loc_bar_0_bar__minus_4_bar_2_bar__minus_30)
+        (objectAtLocation Pillow_bar__minus_00_dot_63_bar__plus_00_dot_63_bar__plus_01_dot_61 loc_bar_3_bar_5_bar_3_bar_45)
+        (objectAtLocation KeyChain_bar__minus_01_dot_35_bar__plus_01_dot_23_bar__minus_00_dot_55 loc_bar__minus_3_bar__minus_3_bar_3_bar_60)
+        (objectAtLocation Bowl_bar__minus_01_dot_32_bar__plus_01_dot_23_bar__minus_00_dot_75 loc_bar__minus_3_bar__minus_3_bar_3_bar_60)
+        (objectAtLocation Watch_bar__plus_02_dot_17_bar__plus_01_dot_04_bar__minus_01_dot_43 loc_bar_10_bar__minus_2_bar_2_bar_30)
+        (objectAtLocation Mirror_bar__plus_01_dot_99_bar__plus_01_dot_38_bar__plus_01_dot_88 loc_bar_8_bar_5_bar_0_bar_30)
+        (objectAtLocation CD_bar__minus_01_dot_35_bar__plus_00_dot_11_bar__minus_00_dot_88 loc_bar__minus_3_bar__minus_4_bar_3_bar_60)
+        (objectAtLocation Pen_bar__plus_02_dot_22_bar__plus_00_dot_80_bar__minus_01_dot_12 loc_bar_9_bar__minus_2_bar_2_bar_60)
+        (objectAtLocation Window_bar__plus_00_dot_12_bar__plus_01_dot_50_bar__minus_01_dot_59 loc_bar_0_bar__minus_4_bar_2_bar_15)
+        (objectAtLocation LightSwitch_bar__plus_02_dot_66_bar__plus_01_dot_28_bar__plus_01_dot_90 loc_bar_10_bar_5_bar_0_bar_30)
+        (objectAtLocation Mug_bar__plus_02_dot_40_bar__plus_00_dot_79_bar__minus_01_dot_25 loc_bar_9_bar__minus_2_bar_2_bar_60)
+        (objectAtLocation Statue_bar__plus_01_dot_82_bar__plus_01_dot_04_bar__minus_01_dot_42 loc_bar_7_bar__minus_3_bar_2_bar_45)
+        )
+    
+
+                (:goal
+                    (and
+                        (exists (?r - receptacle)
+                            (exists (?o1 - object)
+                                (and
+                                    (objectType ?o1 WatchType)
+                                    (receptacleType ?r DresserType)
+                                    (inReceptacle ?o1 ?r)
+                                    (exists (?o2 - object)
+                                        (and
+                                            (not (= ?o1 ?o2))
+                                            (objectType ?o2 WatchType)
+                                            (receptacleType ?r DresserType)
+                                            (inReceptacle ?o2 ?r)
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+            
