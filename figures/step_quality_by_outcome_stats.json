@@ -1,0 +1,100 @@
+{
+  "success/Pick": {
+    "trajectories": 125,
+    "correct_steps": 1532,
+    "error_steps": 1542,
+    "correct_pct": 49.8,
+    "error_pct": 50.2
+  },
+  "success/Look": {
+    "trajectories": 52,
+    "correct_steps": 406,
+    "error_steps": 718,
+    "correct_pct": 36.1,
+    "error_pct": 63.9
+  },
+  "success/Clean": {
+    "trajectories": 17,
+    "correct_steps": 271,
+    "error_steps": 326,
+    "correct_pct": 45.4,
+    "error_pct": 54.6
+  },
+  "success/Heat": {
+    "trajectories": 16,
+    "correct_steps": 267,
+    "error_steps": 232,
+    "correct_pct": 53.5,
+    "error_pct": 46.5
+  },
+  "success/Cool": {
+    "trajectories": 21,
+    "correct_steps": 348,
+    "error_steps": 369,
+    "correct_pct": 48.5,
+    "error_pct": 51.5
+  },
+  "success/Pick2": {
+    "trajectories": 16,
+    "correct_steps": 234,
+    "error_steps": 262,
+    "correct_pct": 47.2,
+    "error_pct": 52.8
+  },
+  "success/WebShop": {
+    "trajectories": 538,
+    "correct_steps": 2136,
+    "error_steps": 919,
+    "correct_pct": 69.9,
+    "error_pct": 30.1
+  },
+  "failure/Pick": {
+    "trajectories": 415,
+    "correct_steps": 9510,
+    "error_steps": 11240,
+    "correct_pct": 45.8,
+    "error_pct": 54.2
+  },
+  "failure/Look": {
+    "trajectories": 184,
+    "correct_steps": 2859,
+    "error_steps": 6341,
+    "correct_pct": 31.1,
+    "error_pct": 68.9
+  },
+  "failure/Clean": {
+    "trajectories": 110,
+    "correct_steps": 2820,
+    "error_steps": 2680,
+    "correct_pct": 51.3,
+    "error_pct": 48.7
+  },
+  "failure/Heat": {
+    "trajectories": 143,
+    "correct_steps": 3214,
+    "error_steps": 3936,
+    "correct_pct": 45.0,
+    "error_pct": 55.0
+  },
+  "failure/Cool": {
+    "trajectories": 107,
+    "correct_steps": 2531,
+    "error_steps": 2819,
+    "correct_pct": 47.3,
+    "error_pct": 52.7
+  },
+  "failure/Pick2": {
+    "trajectories": 222,
+    "correct_steps": 4520,
+    "error_steps": 6580,
+    "correct_pct": 40.7,
+    "error_pct": 59.3
+  },
+  "failure/WebShop": {
+    "trajectories": 900,
+    "correct_steps": 3326,
+    "error_steps": 5595,
+    "correct_pct": 37.3,
+    "error_pct": 62.7
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "dropped_unparseable": 30,
+  "success": {
+    "trajectories": 536,
+    "correct_steps": 2138,
+    "error_steps": 906,
+    "correct_pct": 70.2,
+    "error_pct": 29.8,
+    "label": "Successful"
+  },
+  "failure": {
+    "trajectories": 864,
+    "correct_steps": 3615,
+    "error_steps": 4915,
+    "correct_pct": 42.4,
+    "error_pct": 57.6,
+    "label": "Failed"
+  }
+}
