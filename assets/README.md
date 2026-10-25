@@ -14,3 +14,5 @@ Images are rasterized directly from the supplied PDFs. Experimental values in th
 
 - `scope-mascot.png`: author-supplied SCOPE mascot, shared with the project website.
 - `scope-logo.svg`: editable SCOPE wordmark using the project website's blue, violet, pink, gold, and teal palette.
+
+- `bounded-opsd.svg` and `pairwise-reward.svg`: formula vectors typeset with MathJax. Their SVG descriptions retain the LaTeX source; the README displays the vectors directly.
