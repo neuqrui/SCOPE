@@ -16,6 +16,11 @@
 <!-- ARXIV: Replace the coming-soon label with the final arXiv abstract URL. -->
 </div>
 
+<p align="center">
+  <img src="assets/overview.png" width="100%" alt="Full SCOPE overview: step-level supervision motivations, the SCOPE approach, training dynamics, and ALFWorld and WebShop results.">
+</p>
+<p align="center"><em>SCOPE at a glance: why agents need step-specific supervision, how SCOPE learns from critical steps, and its training dynamics and performance on ALFWorld and WebShop.</em></p>
+
 ## 💡 Overview
 
 Long-horizon agents need feedback on individual decisions. A successful trajectory can contain mistakes that the agent later recovers from, while a failed trajectory can contain correct steps. Applying the same hindsight skill to an entire trajectory also introduces supervision at decisions unrelated to that skill.
@@ -23,11 +28,6 @@ Long-horizon agents need feedback on individual decisions. A successful trajecto
 **SCOPE** learns from self-generated, **step-specific corrective skills**. After a supervised warm-up, the policy analyzes its own successful and failed experience, identifies error steps, and distills the corresponding skills only at those decisions. A bounded signed distillation coefficient controls the auxiliary signal, and a success-relative pairwise reward encourages efficient task completion.
 
 With **Qwen2.5-3B**, SCOPE achieves **97.7% ALFWorld success** and **85.2% WebShop success**, improving over SEED by **5.9** and **6.3 percentage points**. On ALFWorld Unseen, success rises from **66.4% to 89.6%** over GRPO, while reported average interactions fall by **46.7%**.
-
-<p align="center">
-  <img src="assets/overview.png" width="100%" alt="Full SCOPE overview: step-level supervision motivations, the SCOPE approach, training dynamics, and ALFWorld and WebShop results.">
-</p>
-<p align="center"><em>SCOPE at a glance: why agents need step-specific supervision, how SCOPE learns from critical steps, and its training dynamics and performance on ALFWorld and WebShop.</em></p>
 
 ## ✨ Highlights
 
