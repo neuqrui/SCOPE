@@ -59,21 +59,23 @@ At evaluation, the trained agent acts from the ordinary interaction history. Ski
 
 For a selected response token, let $\pi_T$ and $\pi_S$ denote teacher and student probabilities. We use the signed log-probability gap
 
-$$
-\Delta=\log\pi_T-\log\pi_S,
-\qquad
-w(\Delta)=c\,\tanh\!\left(\frac{\alpha}{c}\,\operatorname{sg}[\Delta]\right).
-$$
+```math
+\begin{aligned}
+\Delta &= \log\pi_T-\log\pi_S, \\
+w(\Delta) &= c\,\tanh\left(\frac{\alpha}{c}\,\mathrm{sg}[\Delta]\right).
+\end{aligned}
+```
 
-Here $\operatorname{sg}$ stops gradients through the coefficient, $\alpha$ sets the slope near zero, and $c$ bounds its magnitude. The auxiliary loss averages $-w(\Delta)\log\pi_S$ over selected response tokens. Positive gaps reinforce a sampled token; negative gaps suppress it. An empty selection contributes zero auxiliary loss. Defaults are $\alpha=2.5$, $c=1$, and distillation weight $\lambda_{\mathrm{OPSD}}=0.01$.
+Here `sg` stops gradients through the coefficient, $\alpha$ sets the slope near zero, and $c$ bounds its magnitude. The auxiliary loss averages $-w(\Delta)\log\pi_S$ over selected response tokens. Positive gaps reinforce a sampled token; negative gaps suppress it. An empty selection contributes zero auxiliary loss. Defaults are $\alpha=2.5$, $c=1$, and distillation weight $\lambda_{\mathrm{OPSD}}=0.01$.
 
 For successful trajectory $i$, let $T_i$ count environment interactions and let $S$ be the set of successful trajectories in its task group. Pairwise preferences and the efficiency bonus are
 
-$$
-p_{ij}=\sigma\!\left(\frac{\log T_j-\log T_i}{\tau_{\mathrm{len}}}\right),
-\qquad
-b_i=\frac{1}{|S|-1}\sum_{j\in S\setminus\{i\}}p_{ij}.
-$$
+```math
+\begin{aligned}
+p_{ij} &= \sigma\left(\frac{\log T_j-\log T_i}{\tau_{\mathrm{len}}}\right), \\
+b_i &= \frac{1}{|S|-1}\sum_{j\in S\setminus\{i\}}p_{ij}.
+\end{aligned}
+```
 
 The sigmoid $\sigma$ provides a smooth preference for the shorter success. The shaped reward is $R_i+\lambda_{\mathrm{len}}b_i$, with $\tau_{\mathrm{len}}=0.1$ and $\lambda_{\mathrm{len}}=5$. A lone success receives $b_i=1/2$; failures keep their original task reward. The comparison depends on length ratios and is invariant to multiplying all interaction lengths by the same positive factor.
 
