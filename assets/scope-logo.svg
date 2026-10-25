@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 370 112" role="img" aria-labelledby="title">
+  <title id="title">SCOPE</title>
+  <defs>
+    <linearGradient id="s" x2="1" y2="1"><stop stop-color="#668dd0"/><stop offset="1" stop-color="#83b7d6"/></linearGradient>
+    <linearGradient id="c" x2="1" y2="1"><stop stop-color="#8d78c8"/><stop offset="1" stop-color="#b48fd6"/></linearGradient>
+    <linearGradient id="o" x2="1" y2="1"><stop stop-color="#c483ba"/><stop offset="1" stop-color="#dfa4b4"/></linearGradient>
+    <linearGradient id="p" x2="1" y2="1"><stop stop-color="#c8956f"/><stop offset="1" stop-color="#dfbb83"/></linearGradient>
+    <linearGradient id="e" x2="1" y2="1"><stop stop-color="#78a895"/><stop offset="1" stop-color="#899bd1"/></linearGradient>
+  </defs>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="98" font-weight="800">
+    <text x="4" y="88" fill="url(#s)">S</text><text x="69" y="88" fill="url(#c)">C</text><text x="139" y="88" fill="url(#o)">O</text><text x="215" y="88" fill="url(#p)">P</text><text x="281" y="88" fill="url(#e)">E</text>
+  </g>
+</svg>

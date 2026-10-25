@@ -1,72 +1,73 @@
 <div align="center">
+<img src="assets/scope-mascot.png" height="112" align="absmiddle" alt="SCOPE robot mascot">
+<img src="assets/scope-logo.svg" height="82" align="absmiddle" alt="SCOPE">
 
-# SCOPE
+**Selective Critical-Step On-Policy Self-Distillation**<br>
+**for Agentic Reinforcement Learning**
 
-### Selective Critical-Step On-Policy Self-Distillation<br>for Agentic Reinforcement Learning
+<!-- AUTHORS: Add the final author list here, in publication order. -->
 
-**Learn from the right steps. Complete tasks with fewer interactions.**
-
-[![Code](https://img.shields.io/badge/Code-GitHub-24292e?logo=github)](https://github.com/neuqrui/SCOPE)
-[![Benchmarks](https://img.shields.io/badge/Benchmarks-ALFWorld%20%7C%20WebShop-317F79)](#benchmarks-and-results)
-[![Backbones](https://img.shields.io/badge/Backbones-Qwen2.5%20%7C%20Qwen3-796590)](#benchmarks-and-results)
-[![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
-
-An agentic RL framework that localizes errors, generates step-specific hindsight skills,<br>and distills corrective guidance only at the selected decisions.
-
-[Overview](#overview) · [Framework](#framework) · [Results](#benchmarks-and-results) · [Installation](#installation) · [Quick Start](#quick-start) · [Reproduction Guide](docs/reproduction.md) · [Citation](#citation)
-
+<p align="center">
+  <a href="https://neuqrui.github.io/SCOPE-page/">🌐 Project Page</a> &nbsp;·&nbsp;
+  <span>📄 arXiv (coming soon)</span> &nbsp;·&nbsp;
+  <a href="https://github.com/neuqrui/SCOPE">💻 Code</a> &nbsp;·&nbsp;
+  <a href="docs/reproduction.md">🚀 Reproduction Guide</a>
+</p>
+<!-- ARXIV: Replace the coming-soon label with the final arXiv abstract URL. -->
 </div>
 
-## Overview
+## 💡 Overview
 
-**Task success does not tell us which steps were correct.** A successful agent can recover from mistakes, while a failed trajectory can contain useful decisions. Applying one hindsight skill to an entire trajectory can also change teacher preferences at unrelated steps.
+Long-horizon agents need feedback on individual decisions. A successful trajectory can contain mistakes that the agent later recovers from, while a failed trajectory can contain correct steps. Applying the same hindsight skill to an entire trajectory also introduces supervision at decisions unrelated to that skill.
 
-<p align="center">
-  <img src="assets/motivation.png" alt="Outcome-step mismatch and off-target teacher signals from trajectory-level skills." width="100%">
-</p>
-<p align="center"><sub>In the paper's annotated WebShop trajectories, 29.8% of steps in successful episodes are erroneous, while 42.4% of steps in failed episodes are correct. Skill-unrelated steps account for 57.9% of nonzero sampled-token teacher–student gaps.</sub></p>
+**SCOPE** learns from self-generated, **step-specific corrective skills**. After a supervised warm-up, the policy analyzes its own successful and failed experience, identifies error steps, and distills the corresponding skills only at those decisions. A bounded signed distillation coefficient controls the auxiliary signal, and a success-relative pairwise reward encourages efficient task completion.
 
-SCOPE combines outcome-based GRPO with selective on-policy self-distillation:
-
-- **Self-bootstrapped error analysis.** After a supervised warm-up, the current policy analyzes both successful and failed rollouts and writes corrective skills for selected error steps.
-- **Step-specific distillation.** Each skill guides only its target steps; other steps receive no auxiliary distillation signal.
-- **Bounded signed updates.** A smooth, bounded teacher–student coefficient preserves both positive reinforcement and negative correction while limiting extreme updates.
-- **Success-relative efficiency.** A pairwise length reward favors shorter successful trajectories within the same task group.
-
-**At evaluation, SCOPE uses the ordinary interaction history, with no hindsight skills or analyzer calls.** External annotation is used only for the offline supervised warm-up.
-
-## Framework
+With **Qwen2.5-3B**, SCOPE achieves **97.7% ALFWorld success** and **85.2% WebShop success**, improving over SEED by **5.9** and **6.3 percentage points**. On ALFWorld Unseen, success rises from **66.4% to 89.6%** over GRPO, while reported average interactions fall by **46.7%**.
 
 <p align="center">
-  <img src="assets/framework.png" alt="SCOPE framework: analyzer initialization, self-bootstrapped error analysis, selective bounded signed distillation, and efficiency-aware GRPO." width="100%">
+  <img src="assets/motivation.png" width="100%" alt="Trajectory outcomes hide step quality, and trajectory-level skills produce teacher signals at unrelated steps.">
 </p>
-<p align="center"><sub>Supervised initialization teaches error localization and skill generation. Online training combines selective corrective supervision with task rewards and a preference for shorter successful interactions.</sub></p>
+<p align="center"><em>Our WebShop annotations find errors in 29.8% of steps from successful trajectories and correct decisions in 42.4% of steps from failed trajectories. Skill-unrelated steps account for 57.9% of nonzero sampled-token teacher–student gaps.</em></p>
 
-### 1. Initialize the analyzer
+## ✨ Highlights
 
-Collect a small pool of base-policy trajectories and annotate errors with an external annotator (GLM-5.2 in the paper). Each annotation contains a trajectory summary and up to five skill entries, with `target_steps`, `error_reason`, and `skill`. Supervised fine-tuning teaches the policy to produce this structured analysis.
+- **Self-bootstrapped step-level skills.** The policy serves as both actor and analyzer, turning its own experience into structured corrections with explicit target steps.
+- **Selective, bounded signed OPSD.** Each skill conditions the teacher only at its assigned steps. A smooth tanh coefficient retains both reinforcement and suppression while bounding its magnitude.
+- **Success-relative efficiency.** A soft pairwise comparison favors shorter successful trajectories within the same task group, without specifying an absolute target length.
 
-### 2. Analyze on-policy experience
+At evaluation, the trained agent acts from the ordinary interaction history. Skills and analyzer calls are used during training; external annotation is confined to the offline warm-up.
 
-For each task, sample a group of eight trajectories. The same policy snapshot analyzes its own experience. Successful rollouts are inspected for avoidable mistakes; failed rollouts may also receive up to three successful action sequences from the same group. The analyzer can return no skills when the recorded evidence supports no clear error.
+<a id="method"></a>
 
-### 3. Distill only at selected steps
+## 🧭 Method
 
-The teacher receives the skill assigned to the selected step. Teacher and student score the same sampled response tokens, while the student receives the ordinary history. Teacher scores are cached before student optimization; the snapshot stays fixed during that outer iteration.
+<p align="center">
+  <img src="assets/framework.png" width="100%" alt="SCOPE training: supervised analyzer initialization, on-policy error analysis, step-specific bounded signed distillation, and efficiency-aware GRPO.">
+</p>
+<p align="center"><em>SCOPE learning loop: collect experience → identify errors and generate step-level skills → combine selective self-distillation with efficiency-aware GRPO → update the policy and analyzer.</em></p>
 
-For a selected response token, define the signed gap and bounded coefficient as
+**1. Initialize analysis.** Collect base-policy trajectories and annotate errors with corrective skills. Supervised fine-tuning teaches the policy the structured analysis format. Each skill entry contains `target_steps`, `error_reason`, and `skill`.
+
+**2. Analyze on-policy experience.** Sample eight trajectories per task. The current policy snapshot analyzes both successful and failed rollouts; failures can additionally use up to three successful action sequences from the same group as references. The analyzer returns up to five skill entries, each assigned to one or more steps.
+
+**3. Learn at the selected steps.** The skill-conditioned teacher and ordinary-context student score the same sampled response tokens. Teacher scores are cached before student optimization. Selected steps receive the bounded signed OPSD signal alongside GRPO; other steps receive ordinary RL updates.
+
+**4. Reward efficient success.** Compare interaction lengths among successful trajectories for the same task. Add the resulting pairwise bonus to the task reward, then update the policy. The updated policy supplies both the actor and analyzer for the next iteration.
+
+<details>
+<summary><b>Bounded signed OPSD and pairwise reward</b></summary>
+
+For a selected response token, let $\pi_T$ and $\pi_S$ denote teacher and student probabilities. We use the signed log-probability gap
 
 $$
-\Delta = \log \pi_T - \log \pi_S,
+\Delta=\log\pi_T-\log\pi_S,
 \qquad
-w(\Delta) = c\,\tanh\!\left(\frac{\alpha}{c}\,\operatorname{sg}[\Delta]\right).
+w(\Delta)=c\,\tanh\!\left(\frac{\alpha}{c}\,\operatorname{sg}[\Delta]\right).
 $$
 
-The auxiliary loss averages $-w(\Delta)\log\pi_S$ over selected response tokens only. Here $\operatorname{sg}$ stops gradients through the coefficient. Unselected steps are masked out, and an empty selection gives zero auxiliary loss. The default values are $\alpha=2.5$, $c=1$, and distillation weight $0.01$.
+Here $\operatorname{sg}$ stops gradients through the coefficient, $\alpha$ sets the slope near zero, and $c$ bounds its magnitude. The auxiliary loss averages $-w(\Delta)\log\pi_S$ over selected response tokens. Positive gaps reinforce a sampled token; negative gaps suppress it. An empty selection contributes zero auxiliary loss. Defaults are $\alpha=2.5$, $c=1$, and distillation weight $\lambda_{\mathrm{OPSD}}=0.01$.
 
-### 4. Reward efficient success
-
-Within a task group, compare each successful trajectory's interaction length against the other successes:
+For successful trajectory $i$, let $T_i$ count environment interactions and let $S$ be the set of successful trajectories in its task group. Pairwise preferences and the efficiency bonus are
 
 $$
 p_{ij}=\sigma\!\left(\frac{\log T_j-\log T_i}{\tau_{\mathrm{len}}}\right),
@@ -74,15 +75,30 @@ p_{ij}=\sigma\!\left(\frac{\log T_j-\log T_i}{\tau_{\mathrm{len}}}\right),
 b_i=\frac{1}{|S|-1}\sum_{j\in S\setminus\{i\}}p_{ij}.
 $$
 
-$S$ is the set of successful trajectories, $T_i$ counts environment interactions, and $\sigma$ is the sigmoid. Shorter successes receive a larger bonus. A group with one success uses $b_i=1/2$; failures keep their original task reward. The shaped reward for a success is $R_i+\lambda_{\mathrm{len}}b_i$, with $\tau_{\mathrm{len}}=0.1$ and $\lambda_{\mathrm{len}}=5$.
+The sigmoid $\sigma$ provides a smooth preference for the shorter success. The shaped reward is $R_i+\lambda_{\mathrm{len}}b_i$, with $\tau_{\mathrm{len}}=0.1$ and $\lambda_{\mathrm{len}}=5$. A lone success receives $b_i=1/2$; failures keep their original task reward. The comparison depends on length ratios and is invariant to multiplying all interaction lengths by the same positive factor.
 
-The student is updated with efficiency-aware GRPO, selective self-distillation, reference KL regularization, and an entropy term. The updated policy supplies the actor and analyzer for the next iteration.
+</details>
 
-## Benchmarks and Results
+Explore the [interactive method demos](https://neuqrui.github.io/SCOPE-page/#method) and [recorded ALFWorld / WebShop trajectories](https://neuqrui.github.io/SCOPE-page/#replay) on our project page.
 
-SCOPE is evaluated on **ALFWorld** (text-based household tasks) and **WebShop** (product search and purchase), across three Qwen backbones. ALFWorld reports success across 128 seen-split validation episodes; WebShop uses a fixed set of 128 tasks and reports normalized task score and success rate. All values below are percentages from the paper's main table; SCOPE uses the **step-150 checkpoint**.
+<a id="results"></a>
 
-### Main comparison
+## 📊 Results
+
+We evaluate three Qwen backbones on **ALFWorld** and **WebShop**. SCOPE achieves the highest WebShop success and the highest or tied highest ALFWorld success among the evaluated methods for each backbone.
+
+| Backbone | ALFWorld success ↑ | Gain over SEED | WebShop success ↑ | Gain over SEED |
+| :--- | ---: | ---: | ---: | ---: |
+| Qwen2.5-3B-Instruct | **97.7%** | **+5.9 pp** | **85.2%** | **+6.3 pp** |
+| Qwen2.5-7B-Instruct | **98.4%** | **+2.3 pp** | **84.4%** | **+6.3 pp** |
+| Qwen3-1.7B | **92.2%** | **+0.2 pp** | **78.9%** | **+1.6 pp** |
+
+Main results use SCOPE at **training step 150**. Each benchmark contains 128 evaluation tasks or episodes; ALFWorld uses the seen split. Gains are absolute percentage-point differences.
+
+<details>
+<summary><b>Comparison with GRPO, SDAR, GRSD, and SEED</b></summary>
+
+WebShop reports both normalized task score (partial requirement matching) and success rate (full task completion). All values below are percentages.
 
 | Backbone | Method | ALFWorld success ↑ | WebShop score ↑ | WebShop success ↑ |
 | :--- | :--- | ---: | ---: | ---: |
@@ -102,61 +118,64 @@ SCOPE is evaluated on **ALFWorld** (text-based household tasks) and **WebShop** 
 | | SEED | 92.0 | 87.1 | 77.3 |
 | | **SCOPE** | **92.2** | 83.2 | **78.9** |
 
-SCOPE achieves the highest WebShop success and the highest or tied highest ALFWorld success among the evaluated methods for each backbone. On Qwen2.5-3B, the gains over SEED are **5.9 percentage points on ALFWorld** and **6.3 points on WebShop**. WebShop score measures partial requirement matching separately from exact task success; SCOPE does not lead every score comparison.
-
-<details>
-<summary><b>All eight baselines on Qwen2.5-3B-Instruct</b></summary>
-
-| Method | Guidance | ALFWorld success ↑ | WebShop score ↑ | WebShop success ↑ |
-| :--- | :--- | ---: | ---: | ---: |
-| Vanilla | None | 21.9 | 6.7 | 0.8 |
-| Skill-Prompt* | Skill bank | 28.9 | 0.2 | 0.8 |
-| GRPO | None | 75.0 | 79.8 | 63.3 |
-| AgentOPSD | Skill bank | 84.4 | 90.4 | 69.5 |
-| SDAR | Skill bank | 84.4 | 85.0 | 68.0 |
-| OPID | Hybrid skills | 84.3 | 85.0 | 74.2 |
-| GRSD | Trajectory-level skill | 86.7 | 86.9 | 76.5 |
-| SEED | Trajectory-level skill | 91.8 | 88.5 | 78.9 |
-| **SCOPE** | **Step-specific skills** | **97.7** | 87.9 | **85.2** |
-
-*Skill-Prompt receives skills at evaluation. The other methods use their ordinary policy inputs.
-
 </details>
 
-### Generalization to unseen tasks
+### Generalization and interaction efficiency
 
-On ALFWorld Unseen, SCOPE reaches **89.6% success**, compared with **66.4% for GRPO**. Reported average turns decrease from **18.86 to 10.06**, a **46.7% reduction**.
+On **ALFWorld Unseen**, SCOPE achieves **89.6% success**, compared with **66.4% for GRPO**. Reported average turns decrease from **18.86 to 10.06**.
 
 <p align="center">
-  <img src="assets/unseen-generalization.png" alt="ALFWorld Unseen: SCOPE improves success across all six task families and reduces reported average turns." width="760">
+  <img src="assets/unseen-generalization.png" width="760" alt="ALFWorld Unseen: SCOPE improves task success across all six task families and reduces reported average interactions by 46.7%.">
 </p>
 
 <details>
-<summary><b>Ablations and interaction efficiency</b></summary>
+<summary><b>Ablations and training dynamics</b></summary>
 
-ALFWorld ablations use Qwen2.5-3B at **step 180**, separately from the step-150 main comparison.
+ALFWorld component ablations use **Qwen2.5-3B at step 180**.
 
 | Variant | ALFWorld success ↑ |
 | :--- | ---: |
-| **Full SCOPE** | **98.4** |
-| Without SFT initialization | 92.2 |
-| Without Step-Skill | 96.1 |
-| Trajectory-level guidance | 96.1 |
-| Skill-bank guidance | 95.3 |
-| Without length reward | 93.0 |
-| Absolute length bonus | 97.7 |
+| **Full SCOPE** | **98.4%** |
+| Without SFT initialization | 92.2% |
+| Without Step-Skill | 96.1% |
+| Trajectory-level guidance | 96.1% |
+| Skill-bank guidance | 95.3% |
+| Without length reward | 93.0% |
+| Absolute length bonus | 97.7% |
 
-<p align="center"><img src="assets/ablation-success.png" alt="ALFWorld training dynamics comparing initialization, guidance, and length reward variants." width="100%"></p>
-<p align="center"><sub>Paper ablation and parameter-sensitivity curves. Success axes start at 10% in panel A and 40% in panels B–D.</sub></p>
+<p align="center"><img src="assets/ablation-success.png" width="100%" alt="ALFWorld success curves comparing SCOPE components and the slope, bound, and pairwise-temperature settings."></p>
+<p align="center"><em>Component ablations and parameter sweeps during ALFWorld training.</em></p>
 
-<p align="center"><img src="assets/response-steps.png" alt="Mean response steps during ALFWorld training; lower is better." width="620"></p>
-<p align="center"><sub>Mean response steps on ALFWorld. The GRPO comparison uses seed 0.</sub></p>
+<p align="center"><img src="assets/response-steps.png" width="620" alt="Average response steps on ALFWorld throughout training; lower is better."></p>
+<p align="center"><em>Mean response steps on ALFWorld. The GRPO comparison uses seed 0.</em></p>
 
 </details>
 
-## Installation
+## ⚙️ Paper Defaults
 
-SCOPE builds on the [SDAR](https://github.com/ZJU-REAL/SDAR) / verl-agent training stack. Use separate environments for ALFWorld and WebShop, which require different Python and vLLM versions.
+Our launchers in [`scope/`](scope/) implement the full SCOPE recipe.
+
+| Component | Setting | Default |
+| :--- | :--- | :--- |
+| Step-level guidance | `skill_source` | `step_skill` |
+| Online analyzer | `ana_backend` | `policy_vllm` |
+| Maximum skill entries | Analyzer schema | 5 |
+| Signed OPSD coefficient | `OPSD_GATE` | `tanh` |
+| Slope $\alpha$ | `OPSD_GATE_BETA` | 2.5 |
+| Bound $c$ | `OPSD_ADV_CLIP` | 1 |
+| Distillation weight | `algorithm.opsd_kl.opsd_coef` | 0.01 |
+| Efficiency reward | `LENGTH_REWARD` | `pairwise` |
+| Pairwise temperature | `success_length_pairwise_tau` | 0.1 |
+| Efficiency weight | `success_length_pairwise_coef` | 5 |
+| Rollouts per task | `env.rollout.n` | 8 |
+
+The [Reproduction Guide](docs/reproduction.md) covers GPU allocation, model paths, data preparation, checkpoint selection, and ablation switches.
+
+<a id="quick-start"></a>
+
+## 🚀 Quick Start
+
+SCOPE builds on the [SDAR](https://github.com/ZJU-REAL/SDAR) / verl-agent stack and requires NVIDIA GPUs. Use separate environments for ALFWorld and WebShop.
 
 ```bash
 git clone https://github.com/neuqrui/SCOPE.git
@@ -164,13 +183,21 @@ cd SCOPE
 cp .env.example .env
 ```
 
-Edit `.env` to set local model and data paths. `SWANLAB_MODE=local` enables local logging without an API key.
+Set the base-model paths or Hugging Face IDs in `.env`:
+
+```dotenv
+SCOPE_BASE_3B=Qwen/Qwen2.5-3B-Instruct
+SCOPE_BASE_7B=Qwen/Qwen2.5-7B-Instruct
+SCOPE_BASE_QWEN3=Qwen/Qwen3-1.7B
+ALFWORLD_DATA=./data/alfworld
+SWANLAB_MODE=local
+```
 
 <details>
-<summary><b>ALFWorld environment · Python 3.12</b></summary>
+<summary><b>Install ALFWorld · Python 3.12</b></summary>
 
 ```bash
-conda create -n scope python==3.12 -y
+conda create -n scope python=3.12 -y
 conda activate scope
 pip install vllm==0.11.0
 pip install flash-attn==2.7.4.post1 --no-build-isolation --no-cache-dir
@@ -178,15 +205,15 @@ pip install -e .
 pip install gymnasium==0.29.1 stable-baselines3==2.6.0 alfworld
 ```
 
-Place ALFWorld game files (`json_2.1.1`) under `data/alfworld` and set `ALFWORLD_DATA` accordingly. Preserve the same game pool to reproduce the 180-task sample; a fresh upstream download may change that pool.
+Place the ALFWorld game files (`json_2.1.1`) under `data/alfworld`, or set `ALFWORLD_DATA` to the existing game directory. Sampling and evaluation use the task pools described in the [data preparation guide](docs/reproduction.md#data).
 
 </details>
 
 <details>
-<summary><b>WebShop environment · Python 3.10</b></summary>
+<summary><b>Install WebShop · Python 3.10</b></summary>
 
 ```bash
-conda create -n scope-webshop python==3.10 -y
+conda create -n scope-webshop python=3.10 -y
 conda activate scope-webshop
 cd agent_system/environments/env_package/webshop/webshop
 ./setup.sh -d small
@@ -197,96 +224,73 @@ pip install -e .
 pip install vllm==0.8.2
 ```
 
-The setup downloads `items_shuffle_1000.json` and `items_ins_v2_1000.json`. If those files already exist, install the Python dependencies and spaCy models directly instead of downloading the data again.
+The setup script downloads `items_shuffle_1000.json` and `items_ins_v2_1000.json`. Model and environment configuration is loaded from `.env` by the launchers.
 
 </details>
 
-Default online launchers use **8 GPUs for ALFWorld** and **2 GPUs for WebShop**, with rollout tensor parallelism of 2. `N_GPUS_PER_NODE` overrides the device count; memory needs depend on the backbone and batch settings.
-
-## Quick Start
-
-Run commands from the repository root after preparing the corresponding environment and data. Each task and backbone needs its **own rollout sample, annotated SFT data, and warm-up checkpoint**.
-
-### 1. Collect base-policy rollouts
+### 1. Collect and annotate experience
 
 ```bash
-# ALFWorld · Qwen2.5-3B
+# Qwen2.5-3B: sample 180 training tasks, eight rollouts per task.
 SAMPLE_GPUS=0,1 bash scope/sample/run_alfworld_3b.sh
-
-# WebShop · Qwen2.5-3B
 SAMPLE_GPUS=0,1 bash scope/sample/run_webshop_3b.sh
 ```
 
-Each sampler draws 180 training tasks with eight rollouts per task, using `RandomState(0)`. Outputs go to `work/rollouts/scope/<task>_<model>/` by default.
-
-### 2. Prepare annotations and warm up
-
-**Sampling does not create the annotated `train.jsonl`.** Annotate the collected trajectories using the analyzer schema in [`verl/trainer/ppo/step_skill.py`](verl/trainer/ppo/step_skill.py), then save one system–user–assistant conversation per line under the `messages` field:
+Annotate the collected trajectories using the [analyzer schema](verl/trainer/ppo/step_skill.py). Save each task/model's annotations as `train.jsonl` in its rollout directory, with one system–user–assistant conversation per line under `messages`:
 
 ```text
 work/rollouts/scope/alfworld_qwen2.5_3b/train.jsonl
 work/rollouts/scope/webshop_qwen2.5_3b/train.jsonl
 ```
 
-The assistant target contains `trajectory_summary` and `step_skills`. Each skill has `target_steps`, `error_reason`, and `skill`. The paper uses GLM-5.2 for these offline labels; online training uses the policy itself as the analyzer.
+The assistant target contains `trajectory_summary` and `step_skills`; each skill has `target_steps`, `error_reason`, and `skill`. We use GLM-5.2 for offline annotation. Online analysis uses the policy itself.
+
+### 2. Warm up the analyzer
 
 ```bash
 SFT_CUDA_VISIBLE_DEVICES=0,1 bash scope/sft/run_alfworld_3b.sh
 SFT_CUDA_VISIBLE_DEVICES=0,1 bash scope/sft/run_webshop_3b.sh
 ```
 
-Warm-up checkpoints are written to `work/ckpt/sft/scope/<task>_<model>/global_step_*`. Qwen2.5 defaults to three epochs; Qwen3-1.7B defaults to two. Set `SCOPE_SFT_EPOCHS` to override.
+Each task and backbone uses its own rollout sample, SFT annotations, and warm-up checkpoint. Checkpoints are written to `work/ckpt/sft/scope/<task>_<model>/global_step_*`.
 
-### 3. Run online SCOPE training
+### 3. Train SCOPE
 
 ```bash
 bash scope/alfworld/run_alfworld_3b_step_skill.sh
 bash scope/webshop/run_webshop_3b_step_skill.sh
 ```
 
-RL automatically loads the latest warm-up checkpoint for the matching task and backbone. To choose a checkpoint explicitly:
+The launchers load the latest matching SFT checkpoint, train for **180 updates**, and save at **step 150**. Validation runs every five updates using ordinary policy inputs. Default online runs use **8 GPUs for ALFWorld** and **2 GPUs for WebShop**; both use rollout tensor parallelism of 2.
 
-```bash
-SCOPE_RL_MODEL=/path/to/global_step_N \
-  bash scope/alfworld/run_alfworld_3b_step_skill.sh
-```
+Use `N_GPUS_PER_NODE` to change the device count or `SCOPE_RL_MODEL=/path/to/global_step_N` to select a warm-up checkpoint. Matching `7b` and `qwen3_1.7b` launchers are available in each stage. See the [full reproduction instructions](docs/reproduction.md) for model-specific settings.
 
-The checkpoint must contain `config.json`. The launchers require SFT weights and do not fall back to the base model. Training runs for 180 updates, saves at step 150, and validates every five updates. Main paper results use step 150; validation runs without skills or analyzer calls.
+## 📁 Layout
 
-For Qwen2.5-7B or Qwen3-1.7B, use the matching `7b` or `qwen3_1.7b` launchers in each stage. Full model paths, data preparation notes, hyperparameters, ablation switches, and serial launchers are documented in the **[Reproduction Guide](docs/reproduction.md)**.
+| Path | Role |
+| :--- | :--- |
+| [`scope/sample/`](scope/sample/) | Base-policy rollout collection |
+| [`scope/sft/`](scope/sft/) | Supervised analyzer warm-up |
+| [`scope/alfworld/`](scope/alfworld/), [`scope/webshop/`](scope/webshop/) | Online training launchers |
+| [`scope/env.sh`](scope/env.sh) | Model paths and method defaults |
+| [`verl/trainer/ppo/step_skill.py`](verl/trainer/ppo/step_skill.py) | Analyzer prompts, skill parsing, and step selection |
+| [`verl/trainer/ppo/opsd_kl_utils.py`](verl/trainer/ppo/opsd_kl_utils.py) | Bounded signed distillation |
+| [`agent_system/reward_manager/episode.py`](agent_system/reward_manager/episode.py) | Success-relative pairwise reward |
+| [`docs/reproduction.md`](docs/reproduction.md) | Detailed reproduction guide |
 
-## Repository
+## 🙏 Acknowledgements
 
-```text
-SCOPE/
-├── scope/
-│   ├── sample/                    Base-policy rollout collection
-│   ├── sft/                       Supervised analyzer warm-up
-│   ├── alfworld/                  ALFWorld online training
-│   ├── webshop/                   WebShop online training
-│   └── env.sh                     Model paths and method defaults
-├── verl/trainer/ppo/
-│   ├── step_skill.py              Analyzer schema and step selection
-│   └── opsd_kl_utils.py            Bounded signed distillation
-├── agent_system/reward_manager/
-│   └── episode.py                 Success-relative pairwise reward
-├── docs/reproduction.md           Detailed setup and training guide
-└── assets/                        Paper figures used in this README
-```
+We build on [SDAR](https://github.com/ZJU-REAL/SDAR), [verl](https://github.com/volcengine/verl), and [verl-agent](https://github.com/langfengQ/verl-agent), and evaluate on [ALFWorld](https://github.com/alfworld/alfworld) and [WebShop](https://github.com/princeton-nlp/WebShop). We thank the authors and maintainers of these projects.
 
-Base models default to `Qwen/Qwen2.5-3B-Instruct`, `Qwen/Qwen2.5-7B-Instruct`, and `Qwen/Qwen3-1.7B`. Override them in `.env` with `SCOPE_BASE_3B`, `SCOPE_BASE_7B`, and `SCOPE_BASE_QWEN3`. Environment data and generated training outputs are prepared locally; `data/` is gitignored.
+## 📜 License
 
-## Acknowledgements
+This repository is released under the [Apache License 2.0](LICENSE). Upstream code and datasets retain their respective licenses.
 
-SCOPE builds on [SDAR](https://github.com/ZJU-REAL/SDAR), [verl](https://github.com/volcengine/verl), and [verl-agent](https://github.com/langfengQ/verl-agent), with evaluations on [ALFWorld](https://github.com/alfworld/alfworld) and [WebShop](https://github.com/princeton-nlp/WebShop). We thank the authors and maintainers of these projects.
+<a id="citation"></a>
 
-## License
+## 📚 Citation
 
-This repository is released under the [Apache License 2.0](LICENSE). Refer to the upstream projects for their respective licenses and data terms.
-
-## Citation
-
-To reference this repository:
+The author list and arXiv citation will be added when available. The repository can currently be referenced as:
 
 ```bibtex
 @misc{scope2026,
@@ -295,3 +299,5 @@ To reference this repository:
   url   = {https://github.com/neuqrui/SCOPE}
 }
 ```
+
+<!-- CITATION: Add author, eprint, archivePrefix, and primaryClass after the arXiv record is available. -->

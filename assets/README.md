@@ -9,3 +9,8 @@ These figures are rendered from the author-provided SCOPE Overleaf sources (`SCO
 - `response-steps.png`: `figure/scope-response-steps-compact.pdf`.
 
 Images are rasterized directly from the supplied PDFs. Experimental values in the README follow the main-results table embedded in `sigconf.tex`; the separate `table/main-tab.tex` is not used by that manuscript. Main results use step 150, and ALFWorld ablations use step 180.
+
+## Project identity
+
+- `scope-mascot.png`: author-supplied SCOPE mascot, shared with the project website.
+- `scope-logo.svg`: editable SCOPE wordmark using the project website's blue, violet, pink, gold, and teal palette.
