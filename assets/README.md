@@ -2,6 +2,7 @@
 
 These figures are rendered from the author-provided SCOPE Overleaf sources (`SCOPE_w_w_w.zip`). The main manuscript is `sigconf.tex`.
 
+- `overview.png`: complete `figure/scope-intro-overview.pdf` (paper Figure 1), including motivations, training dynamics, and main results.
 - `motivation.png`: upper motivation panels of `figure/scope-intro-overview.pdf` (paper Figure 1).
 - `framework.png`: `figure/method.pdf` (paper method overview).
 - `unseen-generalization.png`: `figure/scope-unseen-generalization.pdf`.

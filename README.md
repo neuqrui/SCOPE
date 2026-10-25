@@ -25,9 +25,9 @@ Long-horizon agents need feedback on individual decisions. A successful trajecto
 With **Qwen2.5-3B**, SCOPE achieves **97.7% ALFWorld success** and **85.2% WebShop success**, improving over SEED by **5.9** and **6.3 percentage points**. On ALFWorld Unseen, success rises from **66.4% to 89.6%** over GRPO, while reported average interactions fall by **46.7%**.
 
 <p align="center">
-  <img src="assets/motivation.png" width="100%" alt="Trajectory outcomes hide step quality, and trajectory-level skills produce teacher signals at unrelated steps.">
+  <img src="assets/overview.png" width="100%" alt="Full SCOPE overview: step-level supervision motivations, the SCOPE approach, training dynamics, and ALFWorld and WebShop results.">
 </p>
-<p align="center"><em>Our WebShop annotations find errors in 29.8% of steps from successful trajectories and correct decisions in 42.4% of steps from failed trajectories. Skill-unrelated steps account for 57.9% of nonzero sampled-token teacher–student gaps.</em></p>
+<p align="center"><em>SCOPE at a glance: why agents need step-specific supervision, how SCOPE learns from critical steps, and its training dynamics and performance on ALFWorld and WebShop.</em></p>
 
 ## ✨ Highlights
 
