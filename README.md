@@ -95,7 +95,7 @@ Explore the [interactive method demos](https://neuqrui.github.io/SCOPE-page/#met
 
 ## Results
 
-SCOPE improves task completion across model sizes. The table reports success rate (%) for the SCOPE checkpoint at training step 150; a dash indicates that benchmark was not evaluated for that backbone.
+SCOPE improves task completion across model sizes. The table reports success rates (%). ALFWorld Seen and WebShop results use the training-step-150 checkpoints; unseen results are separate evaluations. A dash indicates that benchmark was not evaluated for that backbone.
 
 | Backbone | ALFWorld Seen ↑ | ALFWorld Unseen ↑ | WebShop ↑ |
 | :--- | ---: | ---: | ---: |
