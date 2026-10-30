@@ -5,15 +5,14 @@
 **Selective Critical-Step On-Policy Self-Distillation**<br>
 **for Agentic Reinforcement Learning**
 
-<!-- AUTHORS: Add the final author list here, in publication order. -->
+Qirui Liu · Wei Cao · Yu Mi · Yichen Sun · Xuekun Zhang · Lei Liu · Yue Shen · Zhixuan Chu
 
 <p align="center">
   <a href="https://neuqrui.github.io/SCOPE-page/">🌐 Project Page</a> &nbsp;·&nbsp;
-  <span>📄 arXiv (coming soon)</span> &nbsp;·&nbsp;
+  <a href="https://arxiv.org/abs/2610.38391">📄 Paper (arXiv:2610.38391)</a> &nbsp;·&nbsp;
   <a href="https://github.com/neuqrui/SCOPE">💻 Code</a> &nbsp;·&nbsp;
   <a href="docs/reproduction.md">🚀 Reproduction Guide</a>
 </p>
-<!-- ARXIV: Replace the coming-soon label with the final arXiv abstract URL. -->
 </div>
 
 <p align="center">
@@ -282,14 +281,16 @@ This repository is released under the [Apache License 2.0](LICENSE). Upstream co
 
 ## 📚 Citation
 
-The author list and arXiv citation will be added when available. The repository can currently be referenced as:
+If you use SCOPE in your research, please cite our [arXiv paper](https://arxiv.org/abs/2610.38391):
 
 ```bibtex
-@misc{scope2026,
-  title = {SCOPE: Selective Critical-Step On-Policy Self-Distillation for Agentic Reinforcement Learning},
-  year  = {2026},
-  url   = {https://github.com/neuqrui/SCOPE}
+@misc{liu2026scopeselectivecriticalsteponpolicy,
+      title={SCOPE: Selective Critical-Step On-Policy Self-Distillation for Agentic Reinforcement Learning},
+      author={Qirui Liu and Wei Cao and Yu Mi and Yichen Sun and Xuekun Zhang and Lei Liu and Yue Shen and Zhixuan Chu},
+      year={2026},
+      eprint={2610.38391},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2610.38391},
 }
 ```
-
-<!-- CITATION: Add author, eprint, archivePrefix, and primaryClass after the arXiv record is available. -->
