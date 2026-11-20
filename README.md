@@ -37,8 +37,6 @@
 
 https://github.com/user-attachments/assets/4f7395a4-f949-48ae-a8fc-fba9555e1573
 
-[Download the 1080p MP4 (1:25)](https://github.com/user-attachments/assets/4f7395a4-f949-48ae-a8fc-fba9555e1573)
-
 <a id="overview"></a>
 
 ## 💡 Overview
