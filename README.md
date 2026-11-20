@@ -19,27 +19,34 @@
   <a href="https://huggingface.co/collections/neuqrui/scope"><img src="https://img.shields.io/badge/Models%20%26%20Data-Hugging%20Face-ffc857?logo=huggingface&amp;logoColor=white" alt="Models and data" height="23"></a>
   <a href="https://swanlab.cn/@67r/scope-exp/v1/vy74zd/overview"><img src="https://img.shields.io/badge/Training-Curves-8967b6" alt="Training curves" height="23"></a>
 </p>
+<p align="center"><em>SCOPE trains agents to learn from corrective skills at critical steps in their own trajectories.</em></p>
+
+<p align="center">
+  <a href="#-demo">Demo</a> · <a href="#-overview">Overview</a> · <a href="#-method">Method</a> · <a href="#-results">Results</a> · <a href="#-quick-start">Quick Start</a> · <a href="#-citation">Citation</a>
+</p>
 </div>
+
+## 📣 News
+
+- **[2026-10-30]** Browse the [training curves](https://swanlab.cn/@67r/scope-exp/v1/vy74zd/overview) and released [SFT models and data](https://huggingface.co/collections/neuqrui/scope).
+- **[2026-10-28]** Our [paper](https://arxiv.org/abs/2610.38391) is available on arXiv.
+
+## 🎬 Demo
+
+### SCOPE Project Overview
+
+https://github.com/user-attachments/assets/4f7395a4-f949-48ae-a8fc-fba9555e1573
+
+[Download the 1080p MP4 (1:25)](https://github.com/user-attachments/assets/4f7395a4-f949-48ae-a8fc-fba9555e1573)
+
+<a id="overview"></a>
+
+## 💡 Overview
 
 <p align="center">
   <img src="assets/overview.png" width="100%" alt="Full SCOPE overview: step-level supervision motivations, the SCOPE approach, training dynamics, and ALFWorld and WebShop results.">
 </p>
 <p align="center"><em>SCOPE at a glance: why agents need step-specific supervision, how SCOPE learns from critical steps, and its training dynamics and performance on ALFWorld and WebShop.</em></p>
-
-## News
-
-- **2026/10/28** — Our [paper](https://arxiv.org/abs/2610.38391) is available on arXiv.
-- **2026/10/30** — Browse the [training curves](https://swanlab.cn/@67r/scope-exp/v1/vy74zd/overview) and released [SFT models and data](https://huggingface.co/collections/neuqrui/scope).
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Method](#method)
-- [Results](#results)
-- [Quick Start](#quick-start)
-- [Citation](#citation)
-
-## Overview
 
 Long-horizon agents need feedback on individual decisions. A successful trajectory can contain mistakes that the agent later recovers from, while a failed trajectory can contain correct steps. Applying the same hindsight skill to an entire trajectory also introduces supervision at decisions unrelated to that skill.
 
@@ -47,7 +54,7 @@ Long-horizon agents need feedback on individual decisions. A successful trajecto
 
 With **Qwen2.5-3B**, SCOPE achieves **97.7% ALFWorld success** and **85.2% WebShop success**, improving over SEED by **5.9** and **6.3 percentage points**. On ALFWorld Unseen, success rises from **66.4% to 89.6%** over GRPO, while reported average interactions fall by **46.7%**.
 
-## Highlights
+## ✨ Highlights
 
 - **Self-bootstrapped step-level skills.** The policy serves as both actor and analyzer, turning its own experience into structured corrections with explicit target steps.
 - **Selective, bounded signed OPSD.** Each skill conditions the teacher only at its assigned steps. A smooth tanh coefficient retains both reinforcement and suppression while bounding its magnitude.
@@ -57,7 +64,7 @@ At evaluation, the trained agent acts from the ordinary interaction history. Ski
 
 <a id="method"></a>
 
-## Method
+## 🧭 Method
 
 <p align="center">
   <img src="assets/framework.png" width="100%" alt="SCOPE training: supervised analyzer initialization, on-policy error analysis, step-specific bounded signed distillation, and efficiency-aware GRPO.">
@@ -93,7 +100,7 @@ Explore the [interactive method demos](https://neuqrui.github.io/SCOPE-page/#met
 
 <a id="results"></a>
 
-## Results
+## 📊 Results
 
 SCOPE improves task completion across model sizes. The table reports success rates (%). ALFWorld Seen and WebShop results use the training-step-150 checkpoints; unseen results are separate evaluations. A dash indicates that benchmark was not evaluated for that backbone.
 
@@ -112,7 +119,7 @@ Our launchers in [`scope/`](scope/) use step-specific skills (`skill_source=step
 
 <a id="quick-start"></a>
 
-## Quick Start
+## 🚀 Quick Start
 
 SCOPE builds on the [SDAR](https://github.com/ZJU-REAL/SDAR) / verl-agent stack and requires NVIDIA GPUs. Use separate environments for ALFWorld and WebShop.
 
@@ -221,7 +228,7 @@ This repository is released under the [Apache License 2.0](LICENSE). Upstream co
 
 <a id="citation"></a>
 
-## Citation
+## 📚 Citation
 
 If you use SCOPE in your research, please cite our [arXiv paper](https://arxiv.org/abs/2610.38391):
 
